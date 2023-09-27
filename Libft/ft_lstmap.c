@@ -6,16 +6,16 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 05:52:14 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/01/27 20:09:42 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:49:14 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_line	*ft_lstmap(t_line *lst, void *(*f)(void *), void (*del)(void *))
+t_lst	*ft_lstmap(t_lst *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_line	*node;
-	t_line	*begin;
+	t_lst	*node;
+	t_lst	*begin;
 
 	if (!lst || !f || !del)
 		return (0);

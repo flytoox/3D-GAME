@@ -6,15 +6,15 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 05:43:52 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/02/13 19:31:05 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:49:14 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_line **lst, t_line *new)
+void	ft_lstadd_back(t_lst **lst, t_lst *new)
 {
-	t_line	*check;
+	t_lst	*check;
 
 	if (!new)
 		return ;

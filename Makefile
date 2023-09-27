@@ -6,7 +6,7 @@
 #    By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/09/26 22:18:23 by obelaizi         ###   ########.fr        #
+#    Updated: 2023/09/27 16:47:29 by obelaizi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ FLAGS = #-Wall -Wextra -Werror
 all : libft.a $(NAME)
 
 libft.a :
-	make -C Libft all
+	make -C Libft all bonus
 
 $(NAME) :  $(OBJ) ./Libft/libft.a 
 	$(CC) $(RL_LIB) $(OBJ) $(FLAGS) ./Libft/libft.a -o $(NAME) -lreadline

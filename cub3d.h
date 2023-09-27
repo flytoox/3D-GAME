@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/09/26 22:17:30 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:47:48 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ typedef struct pair
 	char	*first;
 	char	*second;
 }t_strp;
+
+typedef struct s_map
+{
+	char			*s;
+	struct s_map	*next;
+}t_map;
 
 char	**cust_split(char *str);
 
