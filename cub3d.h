@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/10 10:13:34 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:35:56 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>
+
+# define WIDTH 1920
+# define HEIGHT 1080
 
 typedef struct pair
 {
