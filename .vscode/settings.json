@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-	"algorithm": "c",
-	"functional": "c",
-	"libft.h": "c",
-	"cub3d.h": "c"
-}
-}

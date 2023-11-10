@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+         #
+#    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/09/27 16:47:29 by obelaizi         ###   ########.fr        #
+#    Updated: 2023/11/10 09:43:06 by aait-mal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,10 @@
 
 NAME = cub3D
 SRC = $(wildcard  *.c Parsing/*.c gnl/*.c) 
-
 OBJ = $(SRC:.c=.o)
 HEADER = ./cub3d.h ./Libft/libft.h ./gnl/get_next_line.h
 CC = cc
-FLAGS = #-Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 all : libft.a $(NAME)
 
@@ -36,10 +35,10 @@ libft.a :
 	make -C Libft all bonus
 
 $(NAME) :  $(OBJ) ./Libft/libft.a 
-	$(CC) $(RL_LIB) $(OBJ) $(FLAGS) ./Libft/libft.a -o $(NAME) -lreadline
+	$(CC) $(OBJ) $(FLAGS) ./Libft/libft.a -o $(NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(FLAGS) $(RL_INC)  -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	rm -rf $(OBJ)
