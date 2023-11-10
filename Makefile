@@ -6,7 +6,7 @@
 #    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/11/10 09:43:06 by aait-mal         ###   ########.fr        #
+#    Updated: 2023/11/10 10:00:02 by aait-mal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,10 @@ libft.a :
 	make -C Libft all bonus
 
 $(NAME) :  $(OBJ) ./Libft/libft.a 
-	$(CC) $(OBJ) $(FLAGS) ./Libft/libft.a -o $(NAME)
+	$(CC) $(OBJ) $(FLAGS) ./Libft/libft.a -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -Imlx -c $< -o $@
 
 clean :
 	rm -rf $(OBJ)
