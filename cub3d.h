@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/09/27 16:47:48 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:13:34 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,26 @@ typedef struct pair
 {
 	char	*first;
 	char	*second;
-}t_strp;
+}	t_strp;
 
 typedef struct s_map
 {
 	char			*s;
 	struct s_map	*next;
-}t_map;
+}	t_map;
+
+typedef struct s_mlx
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+}	t_mlx;
 
 char	**cust_split(char *str);
 
 bool	good_element(char **tmp, t_strp mp[7]);
 int		check_map(char *map);
+void	set_my_map(t_strp mp[6]);
+bool	start_map(char *line);
+char	**lst_tochar(t_lst *map);
 
 #endif
