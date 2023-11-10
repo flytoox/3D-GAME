@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 22:15:19 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/09/27 17:44:40 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:44:42 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	**lst_tochar(t_lst *map)
 	char	**ret;
 	int		i;
 
+	i = 0;
 	ret = malloc(sizeof(char *) * (ft_lstsize(map) + 1));
 	ret[i] = NULL;
 	i = 0;
@@ -177,7 +178,6 @@ int	check_map(char *map)
 {
 	int		fd;
 	char	*line;
-	int		ret;
 	t_strp	mp[6];
 	char	**tmp;
 	int		i;
