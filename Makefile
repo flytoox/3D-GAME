@@ -6,7 +6,7 @@
 #    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/11/10 10:00:02 by aait-mal         ###   ########.fr        #
+#    Updated: 2023/11/11 12:29:22 by aait-mal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@
 # **************************************************************************** #
 
 NAME = cub3D
-SRC = $(wildcard  *.c Parsing/*.c gnl/*.c) 
+SRC = $(wildcard  *.c Parsing/*.c Map2D/*.c gnl/*.c) 
 OBJ = $(SRC:.c=.o)
 HEADER = ./cub3d.h ./Libft/libft.h ./gnl/get_next_line.h
 CC = cc
