@@ -6,24 +6,12 @@
 #    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/11/11 12:29:22 by aait-mal         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/07 15:13:54 by aait-mal          #+#    #+#              #
-#    Updated: 2023/08/06 17:23:39 by obelaizi         ###   ########.fr        #
+#    Updated: 2023/11/14 10:46:23 by aait-mal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
-SRC = $(wildcard  *.c Parsing/*.c Map2D/*.c gnl/*.c) 
+SRC = $(wildcard  *.c Parsing/*.c MapDraw/*.c Gnl/*.c) 
 OBJ = $(SRC:.c=.o)
 HEADER = ./cub3d.h ./Libft/libft.h ./gnl/get_next_line.h
 CC = cc

@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/12 15:22:37 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:47:47 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "./Libft/libft.h"
-# include "./gnl/get_next_line.h"
+# include "./Gnl/get_next_line.h"
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>
@@ -78,7 +78,7 @@ char	**lst_tochar(t_lst *map);
 void	print_map(char **map);
 char	**copy_map(char **map);
 void	draw_filled_rectangle(t_draw_params *params);
-void	draw_filled_circle(t_draw_params *params);
+void	draw_filled_circle(t_draw_params *params, t_player *player);
 int		myclose(t_map *map);
 int		hook_key(int keycode, t_map *map);
 void	key_binding(t_mlx *mlx, t_map *map);
@@ -87,5 +87,7 @@ void	init_player(t_player *player);
 void	init_mlx_window(t_mlx *mlx, t_map *lmap);
 void	draw_map_cell(char cell, t_draw_params *params, t_player *player);
 void	update_map(t_mlx *mlx, t_map *lmap);
+void	update_player(t_draw_params params, t_map *lmap);
+void	reinit_player(t_player *player);
 
 #endif

@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   mlx_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 12:33:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/12 16:07:10 by aait-mal         ###   ########.fr       */
+/*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
+/*   Updated: 2023/11/14 10:37:50 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	init_player(t_player *player)
+int	myclose(t_map *map)
 {
-	player->radius = 3;
-	player->turn_direction = 0;
-	player->walk_direction = 0;
-	player->rotation_angle = PI / 2;
-	player->move_speed = 8.0;
-	player->rotation_speed = 3 * (PI / 180);
+	map = 0;
+	exit(0);
+	return (0);
+}
+
+void	init_mlx_window(t_mlx *mlx, t_map *lmap)
+{
+	mlx->mlx_ptr = mlx_init();
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr,
+			lmap->width, lmap->height, "CUB3D");
 }

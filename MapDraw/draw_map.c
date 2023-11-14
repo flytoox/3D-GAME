@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map2d.c                                            :+:      :+:    :+:   */
+/*   display_map2d.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 12:19:33 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/12 17:08:11 by aait-mal         ###   ########.fr       */
+/*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
+/*   Updated: 2023/11/14 10:39:47 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,70 +36,30 @@ void	draw_filled_rectangle(t_draw_params *params)
 	}
 }
 
-void	draw_filled_circle(t_draw_params *params)
+void	draw_map_cell(char cell, t_draw_params *params, t_player *player)
 {
-	int	i;
-	int	j;
-
-	i = params->x - params->radius;
-	while (i <= params->x + params->radius)
+	params->width = TILE_SIZE;
+	params->height = TILE_SIZE;
+	if (cell == '1')
 	{
-		j = params->y - params->radius;
-		while (j <= params->y + params->radius)
-		{
-			if ((i - params->x) * (i - params->x) + (j - params->y)
-				* (j - params->y) <= params->radius * params->radius)
-			{
-				mlx_pixel_put(params->mlx->mlx_ptr,
-					params->mlx->win_ptr, i, j, params->color);
-			}
-			j++;
-		}
-		i++;
+		params->color = 0x00FFFF;
+		draw_filled_rectangle(params);
 	}
-}
-
-void reinit_player(t_player *player)
-{
-	player->walk_direction = 0;
-	player->turn_direction = 0;
-}
-
-int	hook_key(int keycode, t_map *map)
-{
-	if (keycode == 53)
-		myclose(map);
-	if (keycode == 13 || keycode == 126)
+	else if (cell == '0' || cell == 'N')
 	{
-		map->player->walk_direction = 1;
-		update_map(map->mlx, map);
-		map->player->walk_direction = 0;
-		printf("up\n");
+		params->color = 0x00FFFFFF;
+		draw_filled_rectangle(params);
 	}
-	if (keycode == 1 || keycode == 125)
+	if (cell == 'N')
 	{
-		map->player->walk_direction = -1;
-		update_map(map->mlx, map);
-		map->player->walk_direction = 0;
-		printf("down\n");
+		params->x += TILE_SIZE / 2;
+		params->y += TILE_SIZE / 2;
+		player->x = params->x;
+		player->y = params->y;
+		params->color = 0x00FF0000;
+		params->radius = player->radius;
+		draw_filled_circle(params, player);
 	}
-	if (keycode == 0 || keycode == 123)
-	{
-		if (map->player->turn_direction == 1)
-			map->player->turn_direction = 0;
-		else if (map->player->turn_direction == 0)
-			map->player->turn_direction = -1;
-		printf("left\n");
-	}
-	if (keycode == 2 || keycode == 124)
-	{
-		if (map->player->turn_direction == -1)
-			map->player->turn_direction = 0;
-		else if (map->player->turn_direction == 0)
-			map->player->turn_direction = 1;
-		printf("right\n");
-	}
-	return (0);
 }
 
 void	display_map_on_screen(char **map, t_map *lmap)
@@ -131,4 +91,39 @@ void	display_map_on_screen(char **map, t_map *lmap)
 	lmap->map = map;
 	key_binding(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
+}
+
+void	update_map(t_mlx *mlx, t_map *lmap)
+{
+	int				i;
+	int				j;
+	t_draw_params	params;
+	
+	mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
+	i = 0;
+	params.mlx = mlx;
+	while (lmap->map[i])
+	{
+		j = 0;
+		while (lmap->map[i][j])
+		{
+			params.x = j * TILE_SIZE;
+			params.y = i * TILE_SIZE;
+			params.width = TILE_SIZE;
+			params.height = TILE_SIZE;
+			if (lmap->map[i][j] == '1')
+			{
+				params.color = 0x00FFFF;
+				draw_filled_rectangle(&params);
+			}
+			else if (lmap->map[i][j] == '0' || lmap->map[i][j] == 'N')
+			{
+				params.color = 0x00FFFFFF;
+				draw_filled_rectangle(&params);
+			}
+			j++;
+		}
+		i++;
+	}
+	update_player(params, lmap);
 }
