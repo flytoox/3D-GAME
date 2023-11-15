@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_map2d.c                                    :+:      :+:    :+:   */
+/*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/14 10:39:47 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:17:54 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	draw_map_cell(char cell, t_draw_params *params, t_player *player)
 		params->color = 0x00FFFF;
 		draw_filled_rectangle(params);
 	}
-	else if (cell == '0' || cell == 'N')
+	else if (cell == '0' || cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
 	{
 		params->color = 0x00FFFFFF;
 		draw_filled_rectangle(params);
 	}
-	if (cell == 'N')
+	if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
 	{
 		params->x += TILE_SIZE / 2;
 		params->y += TILE_SIZE / 2;
@@ -71,7 +71,7 @@ void	display_map_on_screen(char **map, t_map *lmap)
 	int				j;
 
 	init_mlx_window(&mlx, lmap);
-	init_player(&player);
+	init_player(&player, map);
 	params.mlx = &mlx;
 	i = 0;
 	while (map[i])
@@ -95,35 +95,36 @@ void	display_map_on_screen(char **map, t_map *lmap)
 
 void	update_map(t_mlx *mlx, t_map *lmap)
 {
-	int				i;
-	int				j;
+	// int				i;
+	// int				j;
 	t_draw_params	params;
 	
-	mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
-	i = 0;
+	// mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
+	// i = 0;
 	params.mlx = mlx;
-	while (lmap->map[i])
-	{
-		j = 0;
-		while (lmap->map[i][j])
-		{
-			params.x = j * TILE_SIZE;
-			params.y = i * TILE_SIZE;
-			params.width = TILE_SIZE;
-			params.height = TILE_SIZE;
-			if (lmap->map[i][j] == '1')
-			{
-				params.color = 0x00FFFF;
-				draw_filled_rectangle(&params);
-			}
-			else if (lmap->map[i][j] == '0' || lmap->map[i][j] == 'N')
-			{
-				params.color = 0x00FFFFFF;
-				draw_filled_rectangle(&params);
-			}
-			j++;
-		}
-		i++;
-	}
+	// while (lmap->map[i])
+	// {
+	// 	j = 0;
+	// 	while (lmap->map[i][j])
+	// 	{
+	// 		params.x = j * TILE_SIZE;
+	// 		params.y = i * TILE_SIZE;
+	// 		params.width = TILE_SIZE;
+	// 		params.height = TILE_SIZE;
+	// 		if (lmap->map[i][j] == '1')
+	// 		{
+	// 			params.color = 0x00FFFF;
+	// 			draw_filled_rectangle(&params);
+	// 		}
+	// 		else if (lmap->map[i][j] == '0' || lmap->map[i][j] == 'N'
+	// 			|| lmap->map[i][j] == 'S' || lmap->map[i][j] == 'E' || lmap->map[i][j] == 'W')
+	// 		{
+	// 			params.color = 0x00FFFFFF;
+	// 			draw_filled_rectangle(&params);
+	// 		}
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	update_player(params, lmap);
 }

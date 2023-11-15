@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:19:33 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/14 10:40:00 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:17:41 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,41 @@ void	draw_filled_circle(t_draw_params *params, t_player *player)
 		i++;
 	}
 	draw_line(params, params->x + cos(player->rotation_angle)
-		* 20, params->y + sin(player->rotation_angle) * 20);
+		* 15, params->y + sin(player->rotation_angle) * 15);
+}
+
+int	is_there_wall_at(double x, double y, t_map *lmap)
+{
+	int	map_index_x;
+	int	map_index_y;
+	int	ret;
+
+	map_index_x = floor(x / TILE_SIZE);
+	map_index_y = floor(y / TILE_SIZE);
+	if (map_index_x < 0 || map_index_x >= lmap->width
+		|| map_index_y < 0 || map_index_y >= lmap->height)
+		ret = 1;
+	else
+		ret = lmap->map[map_index_y][map_index_x] == '1';
+	return (ret);
 }
 
 void	update_player(t_draw_params params, t_map *lmap)
 {
+	double	newX;
+	double	newY;
+
 	lmap->player->rotation_angle += lmap->player->turn_direction
 		* lmap->player->rotation_speed;
-	lmap->player->x += cos(lmap->player->rotation_angle)
+	newX = lmap->player->x + cos(lmap->player->rotation_angle)
 		* lmap->player->walk_direction * lmap->player->move_speed;
-	lmap->player->y += sin(lmap->player->rotation_angle)
+	newY = lmap->player->y + sin(lmap->player->rotation_angle)
 		* lmap->player->walk_direction * lmap->player->move_speed;
+	if (!is_there_wall_at(newX, newY, lmap))
+	{
+		lmap->player->x = newX;
+		lmap->player->y = newY;
+	}
 	printf("x: %f, y: %f\n", lmap->player->x, lmap->player->y);
 	params.x = lmap->player->x;
 	params.y = lmap->player->y;

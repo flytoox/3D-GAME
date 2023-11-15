@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/11 16:13:54 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:54:45 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ bool	is_itclosed(char **map, int n, int x, int y)
 		return (false);
 	if (map[y][x] == '1' || map[y][x] == 'x')
 		return (true);
-	if (map[y][x] == '0' || map[y][x] == 'N')
+	if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
+		|| map[y][x] == 'E' || map[y][x] == 'W')
 	{
 		map[y][x] = 'x';
 		if (is_itclosed(map, n, x + 1, y)

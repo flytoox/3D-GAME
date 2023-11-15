@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/14 10:47:47 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:18:02 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_map
 	t_player		*player;
 	char			**map;
 	t_mlx			*mlx;
+	int				side_movement;
 	struct s_map	*next;
 }	t_map;
 
@@ -83,11 +84,12 @@ int		myclose(t_map *map);
 int		hook_key(int keycode, t_map *map);
 void	key_binding(t_mlx *mlx, t_map *map);
 void	display_map_on_screen(char **map, t_map *lmap);
-void	init_player(t_player *player);
+void	init_player(t_player *player, char **map);
 void	init_mlx_window(t_mlx *mlx, t_map *lmap);
 void	draw_map_cell(char cell, t_draw_params *params, t_player *player);
 void	update_map(t_mlx *mlx, t_map *lmap);
 void	update_player(t_draw_params params, t_map *lmap);
+int		is_there_wall_at(double x, double y, t_map *lmap);
 void	reinit_player(t_player *player);
 
 #endif
