@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:36:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/15 23:19:38 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:21:27 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	key_binding(t_mlx *mlx, t_map *map)
 
 int	hook_key(int keycode, t_map *map)
 {
-	double	newX;
-	double	newY;
-	
+	int				side_movement;
+	t_draw_params	params;
+
+	side_movement = 0;
 	if (keycode == 53)
 		myclose(map);
 	if (keycode == 13 || keycode == 126)
@@ -34,28 +35,12 @@ int	hook_key(int keycode, t_map *map)
 	if (keycode == 124)
 		map->player->turn_direction += 1;
 	if (keycode == 0)
-	{
-		/*move the player to the letf based on the his rotation angle*/
-		newX = map->player->x + cos(map->player->rotation_angle - PI / 2) * map->player->move_speed;
-		newY = map->player->y + sin(map->player->rotation_angle - PI / 2) * map->player->move_speed;
-		if(!is_there_wall_at(newX, newY, map))
-		{
-			map->player->x = newX;
-			map->player->y = newY;
-		}
-	}
+		side_movement = 1;
 	if (keycode == 2)
-	{
-		/*move the player to the right based on the his rotation angle*/
-		newX = map->player->x + cos(map->player->rotation_angle + PI / 2) * map->player->move_speed;
-		newY = map->player->y + sin(map->player->rotation_angle + PI / 2) * map->player->move_speed;
-		if(!is_there_wall_at(newX, newY, map))
-		{
-			map->player->x = newX;
-			map->player->y = newY;
-		}
-	}
+		side_movement = -1;
+	params.mlx = map->mlx;
 	update_map(map->mlx, map);
+	update_player(params, map, side_movement);
 	reinit_player(map->player);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:19:33 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/15 23:17:41 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:52:06 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	draw_line(t_draw_params *params, int end_x, int end_y)
 	}
 }
 
-void	draw_filled_circle(t_draw_params *params, t_player *player)
+void	draw_filled_circle(t_draw_params *params, t_map *lmap)
 {
 	int	i;
 	int	j;
@@ -72,8 +72,7 @@ void	draw_filled_circle(t_draw_params *params, t_player *player)
 		}
 		i++;
 	}
-	draw_line(params, params->x + cos(player->rotation_angle)
-		* 15, params->y + sin(player->rotation_angle) * 15);
+	cast_all_rays(lmap);
 }
 
 int	is_there_wall_at(double x, double y, t_map *lmap)
@@ -92,26 +91,52 @@ int	is_there_wall_at(double x, double y, t_map *lmap)
 	return (ret);
 }
 
-void	update_player(t_draw_params params, t_map *lmap)
+void	set_coordinates(double *new_x, double *new_y,
+	t_map *lmap, int side_movement)
 {
-	double	newX;
-	double	newY;
+	double	rotation_angle;
+
+	rotation_angle = lmap->player->rotation_angle;
+	if (side_movement == 1)
+	{
+		*new_x = lmap->player->x + cos(rotation_angle - PI / 2)
+			* lmap->player->move_speed;
+		*new_y = lmap->player->y + sin(rotation_angle - PI / 2)
+			* lmap->player->move_speed;
+	}
+	else if (side_movement == -1)
+	{
+		*new_x = lmap->player->x + cos(rotation_angle + PI / 2)
+			* lmap->player->move_speed;
+		*new_y = lmap->player->y + sin(rotation_angle + PI / 2)
+			* lmap->player->move_speed;
+	}
+	else
+	{
+		*new_x = lmap->player->x + cos(rotation_angle)
+			* lmap->player->walk_direction * lmap->player->move_speed;
+		*new_y = lmap->player->y + sin(rotation_angle)
+			* lmap->player->walk_direction * lmap->player->move_speed;
+	}
+}
+
+void	update_player(t_draw_params params, t_map *lmap, int side_movement)
+{
+	double	new_x;
+	double	new_y;
 
 	lmap->player->rotation_angle += lmap->player->turn_direction
 		* lmap->player->rotation_speed;
-	newX = lmap->player->x + cos(lmap->player->rotation_angle)
-		* lmap->player->walk_direction * lmap->player->move_speed;
-	newY = lmap->player->y + sin(lmap->player->rotation_angle)
-		* lmap->player->walk_direction * lmap->player->move_speed;
-	if (!is_there_wall_at(newX, newY, lmap))
+	set_coordinates(&new_x, &new_y, lmap, side_movement);
+	if (!is_there_wall_at(new_x, new_y, lmap))
 	{
-		lmap->player->x = newX;
-		lmap->player->y = newY;
+		lmap->player->x = new_x;
+		lmap->player->y = new_y;
 	}
 	printf("x: %f, y: %f\n", lmap->player->x, lmap->player->y);
 	params.x = lmap->player->x;
 	params.y = lmap->player->y;
 	params.color = 0x00FF0000;
 	params.radius = lmap->player->radius;
-	draw_filled_circle(&params, lmap->player);
+	draw_filled_circle(&params, lmap);
 }
