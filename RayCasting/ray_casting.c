@@ -6,21 +6,21 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/16 23:19:57 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/17 21:48:21 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	draw_fov(t_ray ray, t_map *map)
+void	render_ray(t_ray *ray, t_map *map)
 {
 	t_draw_params	params;
 
 	params.mlx = map->mlx;
-	params.color = 0x00FF0000;
 	params.x = map->player->x;
 	params.y = map->player->y;
-	draw_line(&params, ray.wall_hit_x, ray.wall_hit_y);
+	params.color = 0x00FF0000;
+	draw_line(&params, ray->wall_hit_x, ray->wall_hit_y);
 }
 
 double	normalize_angle(double angle)
@@ -58,10 +58,7 @@ void	check_horizontal_intersect(t_ray *ray, t_map *map)
 	while (ray->next_horz_touch_x >= 0 && ray->next_horz_touch_x <= map->width
 		&& ray->next_horz_touch_y >= 0 && ray->next_horz_touch_y <= map->height)
 	{
-		if (map->map[(int)floor(ray->next_horz_touch_y / TILE_SIZE)][(int)floor(ray->next_horz_touch_x / TILE_SIZE)] != '1'
-			&&map->map[(int)floor(ray->next_horz_touch_y / TILE_SIZE)][(int)floor(ray->next_horz_touch_x / TILE_SIZE)] != '0')
-			break ;
-		if (is_there_wall_at(ray->next_horz_touch_x, ray->next_horz_touch_y, map))
+		if (wall_collision(ray->next_horz_touch_x, ray->next_horz_touch_y, map))
 		{
 			ray->found_horz_wall_hit = true;
 			ray->horz_wall_hit_x = ray->next_horz_touch_x;
@@ -73,6 +70,7 @@ void	check_horizontal_intersect(t_ray *ray, t_map *map)
 			ray->next_horz_touch_x += xstep;
 			ray->next_horz_touch_y += ystep;
 		}
+		
 	}
 }
 
@@ -103,10 +101,7 @@ void	check_vertical_intersect(t_ray *ray, t_map *map)
 	while (ray->next_vert_touch_x >= 0 && ray->next_vert_touch_x <= map->width
 		&& ray->next_vert_touch_y >= 0 && ray->next_vert_touch_y <= map->height)
 	{
-		if (map->map[(int)floor(ray->next_vert_touch_y / TILE_SIZE)][(int)floor(ray->next_vert_touch_x / TILE_SIZE)] != '1'
-			&&map->map[(int)floor(ray->next_vert_touch_y / TILE_SIZE)][(int)floor(ray->next_vert_touch_x / TILE_SIZE)] != '0')
-			break ;
-		if (is_there_wall_at(ray->next_vert_touch_x, ray->next_vert_touch_y, map))
+		if (wall_collision(ray->next_vert_touch_x, ray->next_vert_touch_y, map))
 		{
 			ray->found_vert_wall_hit = true;
 			ray->vert_wall_hit_x = ray->next_vert_touch_x;
@@ -128,8 +123,8 @@ double	distance_between_points(double x1, double y1, double x2, double y2)
 
 void	cast_ray(t_ray *ray, t_map *map)
 {
-	check_horizontal_intersect(ray, map);
 	check_vertical_intersect(ray, map);
+	check_horizontal_intersect(ray, map);
 	if (ray->found_horz_wall_hit)
 		ray->horz_hit_distance = distance_between_points(map->player->x, map->player->y,
 			ray->horz_wall_hit_x, ray->horz_wall_hit_y);
@@ -155,11 +150,12 @@ void	cast_ray(t_ray *ray, t_map *map)
 		ray->distance = ray->vert_hit_distance;
 		ray->was_hit_vertical = true;
 	}
+	printf("wall hit x: %f, wall hit y: %f\n", ray->wall_hit_x, ray->wall_hit_y);
 }
 
-void	initialise_ray(t_ray *ray, t_map *map)
+void	initialise_ray(t_ray *ray, double ray_angle)
 {
-	ray->ray_angle = normalize_angle(map->player->rotation_angle - (FOV_ANGLE / 2));
+	ray->ray_angle = normalize_angle(ray_angle);
 	ray->wall_hit_x = 0;
 	ray->wall_hit_y = 0;
 	ray->distance = 0;
@@ -180,14 +176,17 @@ void	cast_all_rays(t_map *map)
 {
 	int		i;
 	t_ray	ray;
+	double	num_rays;
+	double	ray_angle;
 
-	i = 0;
-	initialise_ray(&ray, map);
-	while (i < 1)
+	i = -1;
+	num_rays = map->width / WALL_STRIP_WIDTH;
+	ray_angle = map->player->rotation_angle - (FOV_ANGLE / 2);
+	while (++i < num_rays)
 	{
+		initialise_ray(&ray, ray_angle);
 		cast_ray(&ray, map);
-		draw_fov(ray, map);
-		ray.ray_angle += FOV_ANGLE / NUM_RAYS;
-		i++;
+		render_ray(&ray, map);
+		ray_angle += FOV_ANGLE / (num_rays);
 	}
 }

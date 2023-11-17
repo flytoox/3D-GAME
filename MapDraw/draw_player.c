@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:19:33 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/16 19:52:06 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/17 21:46:15 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,26 @@ int	is_there_wall_at(double x, double y, t_map *lmap)
 		ret = 1;
 	else
 		ret = lmap->map[map_index_y][map_index_x] == '1';
+	return (ret);
+}
+
+int	wall_collision(double x, double y, t_map *lmap)
+{
+	int	map_index_x;
+	int	map_index_y;
+	int	ret;
+
+	map_index_x = floor(x / TILE_SIZE);
+	map_index_y = floor(y / TILE_SIZE);
+	if (map_index_x < 0 || map_index_x >= lmap->width
+		|| map_index_y < 0 || map_index_y >= lmap->height
+		|| (lmap->map[map_index_y][map_index_x] != '1'
+			&& lmap->map[map_index_y][map_index_x] != '0'
+			&& lmap->map[map_index_y][map_index_x] != 'N'))
+		ret = 1;
+	else
+		ret = lmap->map[map_index_y][map_index_x] == '1';
+	printf("value: %c\n", lmap->map[map_index_y][map_index_x]);
 	return (ret);
 }
 

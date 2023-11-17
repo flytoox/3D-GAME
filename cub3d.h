@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/16 23:18:03 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/17 21:42:22 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define TILE_SIZE 48
+# define TILE_SIZE 32
 # define PI 3.14159265359
 # define FOV_ANGLE (60 * (PI / 180))
 # define WALL_STRIP_WIDTH 1
@@ -124,6 +124,7 @@ void	draw_line(t_draw_params *params, int end_x, int end_y);
 void	update_map(t_mlx *mlx, t_map *lmap);
 void	update_player(t_draw_params params, t_map *lmap, int side_movement);
 int		is_there_wall_at(double x, double y, t_map *lmap);
+int		wall_collision(double x, double y, t_map *lmap);
 void	reinit_player(t_player *player);
 void	cast_all_rays(t_map *map);
 
