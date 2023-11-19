@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/19 18:23:09 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:02:19 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define TILE_SIZE 32
+# define TILE_SIZE 24
 # define PI 3.14159265359
 # define FOV 60
 # define MINI_MAP_SCALE_FACTOR 0.2
@@ -99,7 +99,6 @@ typedef struct s_ray
 	int		is_ray_facing_left;
 	int		is_ray_facing_right;
 	int		wall_hit_content;
-	int		ray_index;
 }	t_ray;
 
 typedef struct s_ray_params
@@ -136,6 +135,8 @@ void	update_player(t_draw_params params, t_map *lmap, int side_movement);
 int		is_there_wall_at(double x, double y, t_map *lmap);
 int		wall_collision(double x, double y, t_map *lmap);
 void	reinit_player(t_player *player);
+void	set_coordinates(double *new_x, double *new_y,
+			t_map *lmap, int side_movement);
 void	cast_all_rays(t_map *map);
 void	initialise_ray(t_ray *ray, double ray_angle);
 void	render_ray(t_ray *ray, t_map *map);
@@ -144,7 +145,6 @@ int		wall_collision(double x, double y, t_map *lmap);
 double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
 void	check_vertical_intersect(t_ray *ray, t_map *map);
-void	render_3d_projection(t_map *lmap, t_draw_params	*params);
-void	update_3d_projection(t_map *lmap, t_draw_params params);
+void	display_3d_map(char **map, t_map *lmap);
 
 #endif

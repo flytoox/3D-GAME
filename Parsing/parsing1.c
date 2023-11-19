@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/15 14:54:45 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 21:52:20 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ bool	check_closed(char **map, int n)
 	int		x;
 	int		y;
 
+	if (!map)
+		return (false);
 	y = 0;
 	print_map(map);
 	printf("\n\n");
@@ -59,6 +61,8 @@ int	get_length(char **map)
 	int	j;
 	int	max;
 
+	if (!map)
+		return (0);
 	i = 0;
 	max = 0;
 	while (map[i])
@@ -71,6 +75,31 @@ int	get_length(char **map)
 		i++;
 	}
 	return (max);
+}
+
+int	there_is_player(char **map)
+{
+	int	i;
+	int	j;
+	int	player;
+
+	if (!map)
+		return (0);
+	i = 0;
+	player = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'N' || map[i][j] == 'S'
+				|| map[i][j] == 'E' || map[i][j] == 'W')
+				player++;
+			j++;
+		}
+		i++;
+	}
+	return (player == 1);
 }
 
 void	parsing_map(int fd, char *line)
@@ -92,13 +121,16 @@ void	parsing_map(int fd, char *line)
 		return (ft_putstr_fd("Error\nMap should be the last;)\n", 2), exit(1));
 	mp = lst_tochar(map);
 	tmp = copy_map(mp);
-	if (!check_closed(lst_tochar(map), ft_lstsize(map)))
+	if (!there_is_player(mp))
+		return (ft_putstr_fd("Player error\n", 2), exit(1));
+	else if (!check_closed(lst_tochar(map), ft_lstsize(map)))
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
 	else
 	{
 		lmap.height = ft_lstsize(map) * TILE_SIZE;
 		lmap.width = get_length(mp) * TILE_SIZE;
-		display_map_on_screen(tmp, &lmap);
+		// display_map_on_screen(tmp, &lmap);
+		display_3d_map(tmp, &lmap);
 	}
 }
 

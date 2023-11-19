@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 18:26:11 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:17:23 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,45 @@ void	cast_ray(t_ray *ray, t_map *map)
 	set_wall_hit_distance(ray);
 }
 
+void	draw_rectangle(t_draw_params *params)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < params->height)
+	{
+		j = 0;
+		while (j < params->width)
+		{
+			mlx_pixel_put(params->mlx->mlx_ptr, params->mlx->win_ptr,
+				params->x + j, params->y + i, params->color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, int ray_index)
+{
+	t_draw_params	params;
+	double			ray_distance;
+	double			distance_projection_plane;
+	double			wall_strip_height;
+	
+	ray_distance = ray->distance;
+	distance_projection_plane = (WIN_WIDTH / 2) / tan(fov_angle / 2);
+	wall_strip_height = (TILE_SIZE / ray_distance) * distance_projection_plane;
+
+	params.mlx = map->mlx;
+	params.x = ray_index * WALL_STRIP_WIDTH;
+	params.y = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
+	params.width = WALL_STRIP_WIDTH;
+	params.height = wall_strip_height;
+	params.color = 0x00FF0000;
+	draw_rectangle(&params);
+}
+
 void	cast_all_rays(t_map *map)
 {
 	int		i;
@@ -56,14 +95,15 @@ void	cast_all_rays(t_map *map)
 	double	fov_angle;
 
 	i = -1;
-	num_rays = map->width / WALL_STRIP_WIDTH;
+	num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
 	fov_angle = 60 * (PI / 180);
 	ray_angle = map->player->rotation_angle - (fov_angle / 2);
 	while (++i < num_rays)
 	{
 		initialise_ray(&ray, ray_angle);
 		cast_ray(&ray, map);
-		render_ray(&ray, map);
+		render_ray_3d(&ray, map, fov_angle, i);
+		// render_ray(&ray, map);
 		ray_angle += fov_angle / (num_rays);
 	}
 }
