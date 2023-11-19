@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:36:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 15:56:02 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:27:26 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ int	hook_key(int keycode, t_map *map)
 	if (keycode == 2)
 		side_movement = -1;
 	params.mlx = map->mlx;
-	// update_map(map->mlx, map);
+	update_map(map->mlx, map);
 	update_player(params, map, side_movement);
-	update_3d_projection(map, params);
 	reinit_player(map->player);
 	return (0);
 }

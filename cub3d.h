@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/19 15:56:26 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:23:09 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_ray
 	int		is_ray_facing_left;
 	int		is_ray_facing_right;
 	int		wall_hit_content;
+	int		ray_index;
 }	t_ray;
 
 typedef struct s_ray_params

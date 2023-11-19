@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:19:33 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 16:03:14 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:28:41 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,10 @@ void	update_player(t_draw_params params, t_map *lmap, int side_movement)
 		lmap->player->x = new_x;
 		lmap->player->y = new_y;
 	}
-	(void)params;
-	// params.x = lmap->player->x;
-	// params.y = lmap->player->y;
-	// params.color = 0x00FF0000;
-	// params.radius = lmap->player->radius;
-	// draw_filled_circle(&params, lmap);
+	params.x = lmap->player->x;
+	params.y = lmap->player->y;
+	params.color = 0x00FF0000;
+	params.radius = lmap->player->radius;
+	draw_filled_circle(&params, lmap);
+	cast_all_rays(lmap);
 }

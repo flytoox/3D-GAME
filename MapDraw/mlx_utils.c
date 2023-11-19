@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 15:50:41 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:27:02 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	myclose(t_map *map)
 
 void	init_mlx_window(t_mlx *mlx, t_map *lmap)
 {
-	(void)lmap;
 	mlx->mlx_ptr = mlx_init();
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr,
-			WIN_WIDTH, WIN_HEIGHT, "CUB3D");
+			lmap->width, lmap->height, "CUB3D");
 }

@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 16:07:16 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:28:13 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	display_map_on_screen(char **map, t_map *lmap)
 	t_mlx			mlx;
 	t_player		player;
 	t_draw_params	params;
-	// int				i;
-	// int				j;
+	int				i;
+	int				j;
 
 	init_mlx_window(&mlx, lmap);
 	init_player(&player, map);
@@ -78,18 +78,18 @@ void	display_map_on_screen(char **map, t_map *lmap)
 	lmap->player = &player;
 	lmap->mlx = &mlx;
 	lmap->map = map;
-	// i = -1;
-	// while (map[++i])
-	// {
-	// 	j = -1;
-	// 	while (map[i][++j])
-	// 	{
-	// 		params.x = j * TILE_SIZE;
-	// 		params.y = i * TILE_SIZE;
-	// 		draw_map_cell(map[i][j], &params, lmap, 1);
-	// 	}
-	// }
-	render_3d_projection(lmap, &params);
+	i = -1;
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+		{
+			params.x = j * TILE_SIZE;
+			params.y = i * TILE_SIZE;
+			draw_map_cell(map[i][j], &params, lmap, 1);
+		}
+	}
+	cast_all_rays(lmap);
 	key_binding(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
 }
