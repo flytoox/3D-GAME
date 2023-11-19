@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:33:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/17 21:50:04 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:26:19 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	init_player(t_player *player, char **map)
 	player->turn_direction = 0;
 	player->walk_direction = 0;
 	player->rotation_angle = get_player_rotation_angle(map);
-	player->move_speed = 4.0;
-	player->rotation_speed = 4 * (PI / 180);
+	player->move_speed = 5.0;
+	player->rotation_speed = 5 * (PI / 180);
 }
 
 void	reinit_player(t_player *player)

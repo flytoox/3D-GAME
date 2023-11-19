@@ -6,12 +6,12 @@
 #    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/11/16 11:00:36 by aait-mal         ###   ########.fr        #
+#    Updated: 2023/11/19 15:48:57 by aait-mal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
-SRC = $(wildcard  *.c Parsing/*.c MapDraw/*.c RayCasting/*.c Gnl/*.c) 
+SRC = $(wildcard  *.c Parsing/*.c MapDraw/*.c RayCasting/*.c MapProjection3D/*.c Gnl/*.c) 
 OBJ = $(SRC:.c=.o)
 HEADER = ./cub3d.h ./Libft/libft.h ./gnl/get_next_line.h
 CC = cc

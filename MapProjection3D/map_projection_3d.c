@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*   map_projection_3d.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 15:50:41 by aait-mal         ###   ########.fr       */
+/*   Created: 2023/11/19 15:49:01 by aait-mal          #+#    #+#             */
+/*   Updated: 2023/11/19 16:07:48 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	myclose(t_map *map)
+void	render_3d_projection(t_map *lmap, t_draw_params	*params)
 {
-	map = 0;
-	exit(0);
-	return (0);
+	int				i;
+	int				j;
+
+	// Project the walls
+	i = -1;
+	while (lmap->map[++i])
+	{
+		j = -1;
+		while (lmap->map[i][++j])
+		{
+			params->x = j * TILE_SIZE;
+			params->y = i * TILE_SIZE;
+			draw_map_cell(lmap->map[i][j], params, lmap, 1);
+		}
+	}
+	cast_all_rays(lmap);
 }
 
-void	init_mlx_window(t_mlx *mlx, t_map *lmap)
+void	update_3d_projection(t_map *lmap, t_draw_params params)
 {
-	(void)lmap;
-	mlx->mlx_ptr = mlx_init();
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr,
-			WIN_WIDTH, WIN_HEIGHT, "CUB3D");
+	render_3d_projection(lmap, &params);
 }
