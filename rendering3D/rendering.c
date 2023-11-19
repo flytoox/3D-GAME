@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 22:08:57 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 00:17:24 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int	hook_key_3d(int keycode, t_map *map)
 	params.mlx = map->mlx;
 	mlx_clear_window(map->mlx->mlx_ptr, map->mlx->win_ptr);
 	update_player_movements(map, side_movement);
-	cast_all_rays(map);
+	cast_all_rays(map, 0);
+	display_2map_on_screen(map);
+	cast_all_rays(map, 1);
 	reinit_player(map->player);
 	return (0);
 }
@@ -84,11 +86,31 @@ void	set_player_position(t_map *lmap)
 			{
 				lmap->player->x = j * TILE_SIZE + TILE_SIZE / 2;
 				lmap->player->y = i * TILE_SIZE + TILE_SIZE / 2;
-				lmap->map[i][j] = '0';
 				return ;
 			}
 		}
 	}
+}
+
+void	display_2map_on_screen(t_map *lmap)
+{
+	int				i;
+	int				j;
+	t_draw_params	params;
+
+	i = -1;
+	params.mlx = lmap->mlx;
+	while (lmap->map[++i])
+	{
+		j = -1;
+		while (lmap->map[i][++j])
+		{
+			params.x = j * TILE_SIZE;
+			params.y = i * TILE_SIZE;
+			draw_map_cell(lmap->map[i][j], &params, lmap);
+		}
+	}
+	cast_all_rays(lmap, 1);
 }
 
 void	display_3d_map(char **map, t_map *lmap)
@@ -103,10 +125,9 @@ void	display_3d_map(char **map, t_map *lmap)
 	lmap->player = &player;
 	lmap->mlx = &mlx;
 	lmap->map = map;
-
 	set_player_position(lmap);
-
-	cast_all_rays(lmap);
+	cast_all_rays(lmap, 0);
+	display_2map_on_screen(lmap);
 	key_binding_3d(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
 }

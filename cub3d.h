@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/19 22:02:19 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 00:11:38 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define TILE_SIZE 24
+# define TILE_SIZE 18
 # define PI 3.14159265359
 # define FOV 60
 # define MINI_MAP_SCALE_FACTOR 0.2
@@ -120,24 +120,24 @@ char	**lst_tochar(t_lst *map);
 void	print_map(char **map);
 char	**copy_map(char **map);
 void	draw_filled_rectangle(t_draw_params *params);
-void	draw_filled_circle(t_draw_params *params, t_map *lmap);
+void	draw_filled_circle(t_draw_params *params);
 int		myclose(t_map *map);
-int		hook_key(int keycode, t_map *map);
-void	key_binding(t_mlx *mlx, t_map *map);
-void	display_map_on_screen(char **map, t_map *lmap);
+// int		hook_key(int keycode, t_map *map);
+// void	key_binding(t_mlx *mlx, t_map *map);
+// void	display_map_on_screen(char **map, t_map *lmap);
 void	init_player(t_player *player, char **map);
 void	init_mlx_window(t_mlx *mlx, t_map *lmap);
 void	draw_map_cell(char cell, t_draw_params *params,
-			t_map *lmap, int draw_p);
+			t_map *lmap);
 void	draw_line(t_draw_params *params, int end_x, int end_y);
-void	update_map(t_mlx *mlx, t_map *lmap);
-void	update_player(t_draw_params params, t_map *lmap, int side_movement);
+// void	update_map(t_mlx *mlx, t_map *lmap);
+// void	update_player(t_draw_params params, t_map *lmap, int side_movement);
 int		is_there_wall_at(double x, double y, t_map *lmap);
 int		wall_collision(double x, double y, t_map *lmap);
 void	reinit_player(t_player *player);
 void	set_coordinates(double *new_x, double *new_y,
 			t_map *lmap, int side_movement);
-void	cast_all_rays(t_map *map);
+void	cast_all_rays(t_map *map, int is_2d);
 void	initialise_ray(t_ray *ray, double ray_angle);
 void	render_ray(t_ray *ray, t_map *map);
 double	normalize_angle(double angle);
@@ -146,5 +146,6 @@ double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
 void	check_vertical_intersect(t_ray *ray, t_map *map);
 void	display_3d_map(char **map, t_map *lmap);
+void	display_2map_on_screen(t_map *lmap);
 
 #endif

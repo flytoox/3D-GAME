@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 22:17:23 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/19 23:47:41 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, int ray_index)
 	draw_rectangle(&params);
 }
 
-void	cast_all_rays(t_map *map)
+void	cast_all_rays(t_map *map, int is_2d)
 {
 	int		i;
 	t_ray	ray;
@@ -102,8 +102,10 @@ void	cast_all_rays(t_map *map)
 	{
 		initialise_ray(&ray, ray_angle);
 		cast_ray(&ray, map);
-		render_ray_3d(&ray, map, fov_angle, i);
-		// render_ray(&ray, map);
+		if (is_2d)
+			render_ray(&ray, map);
+		else
+			render_ray_3d(&ray, map, fov_angle, i);
 		ray_angle += fov_angle / (num_rays);
 	}
 }

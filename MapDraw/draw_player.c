@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:19:33 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 18:28:41 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 00:10:22 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	draw_line(t_draw_params *params, int end_x, int end_y)
 	}
 }
 
-void	draw_filled_circle(t_draw_params *params, t_map *lmap)
+void	draw_filled_circle(t_draw_params *params)
 {
 	int	i;
 	int	j;
@@ -72,7 +72,6 @@ void	draw_filled_circle(t_draw_params *params, t_map *lmap)
 		}
 		i++;
 	}
-	(void)lmap;
 }
 
 int	is_there_wall_at(double x, double y, t_map *lmap)
@@ -120,23 +119,23 @@ void	set_coordinates(double *new_x, double *new_y,
 	}
 }
 
-void	update_player(t_draw_params params, t_map *lmap, int side_movement)
-{
-	double	new_x;
-	double	new_y;
+// void	update_player(t_draw_params params, t_map *lmap, int side_movement)
+// {
+// 	double	new_x;
+// 	double	new_y;
 
-	lmap->player->rotation_angle += lmap->player->turn_direction
-		* lmap->player->rotation_speed;
-	set_coordinates(&new_x, &new_y, lmap, side_movement);
-	if (!is_there_wall_at(new_x, new_y, lmap))
-	{
-		lmap->player->x = new_x;
-		lmap->player->y = new_y;
-	}
-	params.x = lmap->player->x;
-	params.y = lmap->player->y;
-	params.color = 0x00FF0000;
-	params.radius = lmap->player->radius;
-	draw_filled_circle(&params, lmap);
-	cast_all_rays(lmap);
-}
+// 	lmap->player->rotation_angle += lmap->player->turn_direction
+// 		* lmap->player->rotation_speed;
+// 	set_coordinates(&new_x, &new_y, lmap, side_movement);
+// 	if (!is_there_wall_at(new_x, new_y, lmap))
+// 	{
+// 		lmap->player->x = new_x;
+// 		lmap->player->y = new_y;
+// 	}
+// 	params.x = lmap->player->x;
+// 	params.y = lmap->player->y;
+// 	params.color = 0x00FF0000;
+// 	params.radius = lmap->player->radius;
+// 	draw_filled_circle(&params, lmap);
+// 	cast_all_rays(lmap, 1);
+// }

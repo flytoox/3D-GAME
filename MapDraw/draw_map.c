@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 22:16:21 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 00:20:07 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	draw_filled_rectangle(t_draw_params *params)
 }
 
 void	draw_map_cell(char cell, t_draw_params *params,
-	t_map *lmap, int draw_p)
+	t_map *lmap)
 {
 	params->width = TILE_SIZE;
 	params->height = TILE_SIZE;
@@ -52,65 +52,64 @@ void	draw_map_cell(char cell, t_draw_params *params,
 		params->color = 0x00FFFFFF;
 		draw_filled_rectangle(params);
 	}
-	if ((cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W') && draw_p)
+	if ((cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W'))
 	{
 		params->x += TILE_SIZE / 2;
 		params->y += TILE_SIZE / 2;
-		lmap->player->x = params->x;
-		lmap->player->y = params->y;
+		// lmap->player->x = params->x;
+		// lmap->player->y = params->y;
 		params->color = 0x00FF0000;
 		params->radius = lmap->player->radius;
-		draw_filled_circle(params, lmap);
+		// draw_filled_circle(params);
 	}
 }
 
-void	display_map_on_screen(char **map, t_map *lmap)
-{
-	t_mlx			mlx;
-	t_player		player;
-	t_draw_params	params;
-	int				i;
-	int				j;
+// void	display_map_on_screen(char **map, t_map *lmap)
+// {
+// 	t_mlx			mlx;
+// 	t_player		player;
+// 	t_draw_params	params;
+// 	int				i;
+// 	int				j;
 
-	init_mlx_window(&mlx, lmap);
-	init_player(&player, map);
-	params.mlx = &mlx;
-	lmap->player = &player;
-	lmap->mlx = &mlx;
-	lmap->map = map;
-	i = -1;
-	while (map[++i])
-	{
-		j = -1;
-		while (map[i][++j])
-		{
-			params.x = j * TILE_SIZE;
-			params.y = i * TILE_SIZE;
-			draw_map_cell(map[i][j], &params, lmap, 1);
-		}
-	}
-	cast_all_rays(lmap);
-	key_binding(&mlx, lmap);
-	mlx_loop(mlx.mlx_ptr);
-}
+// 	init_mlx_window(&mlx, lmap);
+// 	init_player(&player, map);
+// 	params.mlx = &mlx;
+// 	lmap->player = &player;
+// 	lmap->mlx = &mlx;
+// 	lmap->map = map;
+// 	i = -1;
+// 	while (map[++i])
+// 	{
+// 		j = -1;
+// 		while (map[i][++j])
+// 		{
+// 			params.x = j * TILE_SIZE;
+// 			params.y = i * TILE_SIZE;
+// 			draw_map_cell(map[i][j], &params, lmap, 1);
+// 		}
+// 	}
+// 	cast_all_rays(lmap, 1);
+// 	key_binding(&mlx, lmap);
+// 	mlx_loop(mlx.mlx_ptr);
+// }
 
-void	update_map(t_mlx *mlx, t_map *lmap)
-{
-	int				i;
-	int				j;
-	t_draw_params	params;
+// void	update_map(t_mlx *mlx, t_map *lmap)
+// {
+// 	int				i;
+// 	int				j;
+// 	t_draw_params	params;
 
-	mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
-	i = -1;
-	params.mlx = mlx;
-	while (lmap->map[++i])
-	{
-		j = -1;
-		while (lmap->map[i][++j])
-		{
-			params.x = j * TILE_SIZE;
-			params.y = i * TILE_SIZE;
-			draw_map_cell(lmap->map[i][j], &params, lmap, 0);
-		}
-	}
-}
+// 	i = -1;
+// 	params.mlx = mlx;
+// 	while (lmap->map[++i])
+// 	{
+// 		j = -1;
+// 		while (lmap->map[i][++j])
+// 		{
+// 			params.x = j * TILE_SIZE;
+// 			params.y = i * TILE_SIZE;
+// 			draw_map_cell(lmap->map[i][j], &params, lmap, 0);
+// 		}
+// 	}
+// }
