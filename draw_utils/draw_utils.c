@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/20 00:20:07 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:54:07 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,64 +52,71 @@ void	draw_map_cell(char cell, t_draw_params *params,
 		params->color = 0x00FFFFFF;
 		draw_filled_rectangle(params);
 	}
-	if ((cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W'))
+	params->x = lmap->player->x;
+	params->y = lmap->player->y;
+	params->color = 0x00FF0000;
+	params->radius = lmap->player->radius;
+	draw_filled_circle(params);
+}
+
+void	draw_filled_circle(t_draw_params *params)
+{
+	int	i;
+	int	j;
+
+	i = params->x - params->radius;
+	while (i <= params->x + params->radius)
 	{
-		params->x += TILE_SIZE / 2;
-		params->y += TILE_SIZE / 2;
-		// lmap->player->x = params->x;
-		// lmap->player->y = params->y;
-		params->color = 0x00FF0000;
-		params->radius = lmap->player->radius;
-		// draw_filled_circle(params);
+		j = params->y - params->radius;
+		while (j <= params->y + params->radius)
+		{
+			if ((i - params->x) * (i - params->x) + (j - params->y)
+				* (j - params->y) <= params->radius * params->radius)
+				mlx_pixel_put(params->mlx->mlx_ptr,
+					params->mlx->win_ptr, i, j, params->color);
+			j++;
+		}
+		i++;
 	}
 }
 
-// void	display_map_on_screen(char **map, t_map *lmap)
-// {
-// 	t_mlx			mlx;
-// 	t_player		player;
-// 	t_draw_params	params;
-// 	int				i;
-// 	int				j;
+void	draw_line(t_draw_params *params, int end_x, int end_y)
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
 
-// 	init_mlx_window(&mlx, lmap);
-// 	init_player(&player, map);
-// 	params.mlx = &mlx;
-// 	lmap->player = &player;
-// 	lmap->mlx = &mlx;
-// 	lmap->map = map;
-// 	i = -1;
-// 	while (map[++i])
-// 	{
-// 		j = -1;
-// 		while (map[i][++j])
-// 		{
-// 			params.x = j * TILE_SIZE;
-// 			params.y = i * TILE_SIZE;
-// 			draw_map_cell(map[i][j], &params, lmap, 1);
-// 		}
-// 	}
-// 	cast_all_rays(lmap, 1);
-// 	key_binding(&mlx, lmap);
-// 	mlx_loop(mlx.mlx_ptr);
-// }
-
-// void	update_map(t_mlx *mlx, t_map *lmap)
-// {
-// 	int				i;
-// 	int				j;
-// 	t_draw_params	params;
-
-// 	i = -1;
-// 	params.mlx = mlx;
-// 	while (lmap->map[++i])
-// 	{
-// 		j = -1;
-// 		while (lmap->map[i][++j])
-// 		{
-// 			params.x = j * TILE_SIZE;
-// 			params.y = i * TILE_SIZE;
-// 			draw_map_cell(lmap->map[i][j], &params, lmap, 0);
-// 		}
-// 	}
-// }
+	dx = abs(end_x - params->x);
+	dy = abs(end_y - params->y);
+	if (params->x < end_x)
+		sx = 1;
+	else
+		sx = -1;
+	if (params->y < end_y)
+		sy = 1;
+	else
+		sy = -1;
+	err = (dx > dy) - (dy > dx) / 2;
+	e2 = 0;
+	while (1)
+	{
+		mlx_pixel_put(params->mlx->mlx_ptr, params->mlx->win_ptr,
+			params->x, params->y, params->color);
+		if (params->x == end_x && params->y == end_y)
+			break ;
+		e2 = err;
+		if (e2 > -dx)
+		{
+			err -= dy;
+			params->x += sx;
+		}
+		if (e2 < dy)
+		{
+			err += dx;
+			params->y += sy;
+		}
+	}
+}

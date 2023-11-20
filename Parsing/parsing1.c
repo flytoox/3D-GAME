@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/19 21:52:20 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:46:23 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,53 +55,6 @@ bool	check_closed(char **map, int n)
 	return (1);
 }
 
-int	get_length(char **map)
-{
-	int	i;
-	int	j;
-	int	max;
-
-	if (!map)
-		return (0);
-	i = 0;
-	max = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-			j++;
-		if (j > max)
-			max = j;
-		i++;
-	}
-	return (max);
-}
-
-int	there_is_player(char **map)
-{
-	int	i;
-	int	j;
-	int	player;
-
-	if (!map)
-		return (0);
-	i = 0;
-	player = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'N' || map[i][j] == 'S'
-				|| map[i][j] == 'E' || map[i][j] == 'W')
-				player++;
-			j++;
-		}
-		i++;
-	}
-	return (player == 1);
-}
-
 void	parsing_map(int fd, char *line)
 {
 	t_lst	*map;
@@ -125,13 +78,9 @@ void	parsing_map(int fd, char *line)
 		return (ft_putstr_fd("Player error\n", 2), exit(1));
 	else if (!check_closed(lst_tochar(map), ft_lstsize(map)))
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
-	else
-	{
-		lmap.height = ft_lstsize(map) * TILE_SIZE;
-		lmap.width = get_length(mp) * TILE_SIZE;
-		// display_map_on_screen(tmp, &lmap);
-		display_3d_map(tmp, &lmap);
-	}
+	lmap.height = ft_lstsize(map) * TILE_SIZE;
+	lmap.width = get_length(mp) * TILE_SIZE;
+	display_3d_map(tmp, &lmap);
 }
 
 int	check_map(char *map)
@@ -140,14 +89,10 @@ int	check_map(char *map)
 	char	*line;
 	t_strp	mp[6];
 	char	**tmp;
-	int		i;
 
-	if (ft_strlen(map) >= 4
-		&& ft_strncmp(map + ft_strlen(map) - 4, ".cub", 4) != 0)
-		return (ft_putstr_fd("Error\nWrong file extension\n", 2), 1);
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
-		return (ft_putstr_fd("Error\nCan't open map\n", 2), 1);
+	if (check_file_extension(map))
+		return (1);
+	fd = open_map_file(map);
 	line = get_next_line(fd);
 	set_my_map(mp);
 	while (line)
@@ -161,10 +106,8 @@ int	check_map(char *map)
 	}
 	if (!line)
 		return (ft_putstr_fd("Error\nNo map\n", 2), 1);
-	i = -1;
-	while (++i < 6) 
-		if (!mp[i].second)
-			return (ft_putstr_fd("Error\nMap should be the last\n", 2), 1);
+	if (check_map_last(mp))
+		return (1);
 	parsing_map(fd, line);
 	return (0);
 }

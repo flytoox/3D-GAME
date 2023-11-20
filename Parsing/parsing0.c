@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 22:15:19 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/19 22:31:30 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:17:33 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**lst_tochar(t_lst *map)
 	i = 0;
 	while (map)
 	{
-		ret[i] = (char*)map->data;
+		ret[i] = (char *)map->data;
 		i++;
 		map = map->next;
 	}

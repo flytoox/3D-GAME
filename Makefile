@@ -6,35 +6,35 @@
 #    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/11/19 22:38:44 by aait-mal         ###   ########.fr        #
+#    Updated: 2023/11/20 15:25:10 by aait-mal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
-SRC = $(wildcard  *.c Parsing/*.c MapDraw/*.c RayCasting/*.c rendering3D/*.c Gnl/*.c) 
+HEADER = ./cub3d.h ./libft/libft.h ./get_next_line/get_next_line.h
+SRC = $(wildcard  *.c parsing/*.c draw_utils/*.c mlx_utils/*.c ray_casting/*.c rendering_3d/*.c get_next_line/*.c) 
 OBJ = $(SRC:.c=.o)
-HEADER = ./cub3d.h ./Libft/libft.h ./gnl/get_next_line.h
 CC = cc
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror
 
 all : libft.a $(NAME)
 
 libft.a :
-	make -C Libft all bonus
+	make -C libft all bonus
 
-$(NAME) :  $(OBJ) ./Libft/libft.a 
-	$(CC) $(OBJ) $(FLAGS) ./Libft/libft.a -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME) :  $(OBJ) ./libft/libft.a 
+	$(CC) $(OBJ) $(FLAGS) ./libft/libft.a -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(FLAGS) -Imlx -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	rm -rf $(OBJ)
-	make -C Libft clean
+	make -C libft clean
 
 fclean : clean
 	rm -rf $(NAME)
-	make -C Libft fclean
+	make -C libft fclean
 
 re : fclean all
 
