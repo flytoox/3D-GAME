@@ -6,13 +6,13 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:36:08 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/18 18:21:19 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:21:36 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	render_ray(t_ray *ray, t_map *map)
+void	render_ray(t_ray *ray, t_map *map, t_data *img)
 {
 	t_draw_params	params;
 
@@ -20,7 +20,7 @@ void	render_ray(t_ray *ray, t_map *map)
 	params.x = map->player->x;
 	params.y = map->player->y;
 	params.color = 0x00FF0000;
-	draw_line(&params, ray->wall_hit_x, ray->wall_hit_y);
+	draw_line(&params, ray->wall_hit_x, ray->wall_hit_y, img);
 }
 
 double	normalize_angle(double angle)

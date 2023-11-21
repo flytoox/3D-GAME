@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/20 15:46:23 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 21:15:26 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,11 @@ int	check_map(char *map)
 		if (start_map(line))
 			break ;
 		tmp = cust_split(line);
+		free(line);
 		line = get_next_line(fd);
 		if (!good_element(tmp, mp))
 			return (ft_putstr_fd("Error\nWrong element\n", 2), 1);
+		free(tmp);
 	}
 	if (!line)
 		return (ft_putstr_fd("Error\nNo map\n", 2), 1);

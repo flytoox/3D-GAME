@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/20 15:29:18 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:39:50 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	cast_ray(t_ray *ray, t_map *map)
 	set_wall_hit_distance(ray);
 }
 
-void	draw_rectangle(t_draw_params *params)
+void	draw_rectangle(t_draw_params *params, t_data *img)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < params->height)
@@ -58,31 +58,40 @@ void	draw_rectangle(t_draw_params *params)
 		j = 0;
 		while (j < params->width)
 		{
-			mlx_pixel_put(params->mlx->mlx_ptr, params->mlx->win_ptr,
-				params->x + j, params->y + i, params->color);
+			my_mlx_pixel_put(img, j, i, params->color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, int ray_index)
+void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img)
 {
 	t_draw_params	params;
 	double			ray_distance;
 	double			distance_projection_plane;
 	double			wall_strip_height;
 
-	ray_distance = ray->distance;
+	ray_distance = ray->distance * cos(ray->ray_angle - map->player->rotation_angle);
 	distance_projection_plane = (WIN_WIDTH / 2) / tan(fov_angle / 2);
 	wall_strip_height = (TILE_SIZE / ray_distance) * distance_projection_plane;
 	params.mlx = map->mlx;
-	params.x = ray_index * WALL_STRIP_WIDTH;
+	params.x = ray->ray_index * WALL_STRIP_WIDTH;
 	params.y = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
 	params.width = WALL_STRIP_WIDTH;
 	params.height = wall_strip_height;
 	params.color = 0x00FF0000;
-	draw_rectangle(&params);
+	draw_line(&params, params.x + params.width, params.y + params.height, img);
+	
+	params.color = 0x0000FFFF;
+	params.height = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
+	params.y = 0;
+	draw_line(&params, params.x + params.width, params.y + params.height, img);
+	
+	params.color = 0x00A9A9A9;
+	params.height = (WIN_HEIGHT / 2) + (wall_strip_height / 2);
+	params.y = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
+	draw_line(&params, params.x + params.width, params.y + params.height, img);
 }
 
 void	cast_all_rays(t_map *map, int is_2d)
@@ -92,19 +101,40 @@ void	cast_all_rays(t_map *map, int is_2d)
 	double	num_rays;
 	double	ray_angle;
 	double	fov_angle;
+	t_data	img;
 
 	i = -1;
 	num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
-	fov_angle = 60 * (PI / 180);
+	fov_angle = FOV * (PI / 180);
 	ray_angle = map->player->rotation_angle - (fov_angle / 2);
+	img.img = mlx_new_image(map->mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+			&img.line_length, &img.endian);
 	while (++i < num_rays)
 	{
 		initialise_ray(&ray, ray_angle);
 		cast_ray(&ray, map);
-		if (is_2d)
-			render_ray(&ray, map);
-		else
-			render_ray_3d(&ray, map, fov_angle, i);
+		ray.ray_index = i;
+		render_ray_3d(&ray, map, fov_angle, &img);
 		ray_angle += fov_angle / (num_rays);
 	}
+	if (is_2d)
+	{
+		i = -1;
+		num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
+		fov_angle = FOV * (PI / 180);
+		ray_angle = map->player->rotation_angle - (fov_angle / 2);
+		display_2d_map_on_screen(map, &img);
+		while (++i < num_rays)
+		{
+			initialise_ray(&ray, ray_angle);
+			cast_ray(&ray, map);
+			ray.ray_index = i;
+			render_ray(&ray, map, &img);
+			ray_angle += fov_angle / (num_rays);
+		}
+	}
+	mlx_put_image_to_window(map->mlx->mlx_ptr, map->mlx->win_ptr,
+		img.img, 0, 0);
+	mlx_destroy_image(map->mlx->mlx_ptr, img.img);
 }

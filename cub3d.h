@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/20 15:47:32 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:32:43 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
 # include <math.h>
+// # include "./mlx/mlx.h"
 # include <mlx.h>
 # include <stdbool.h>
 # include <limits.h>
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define TILE_SIZE 18
+# define TILE_SIZE 30
 # define PI 3.14159265359
 # define FOV 60
 # define MINI_MAP_SCALE_FACTOR 0.2
@@ -38,6 +39,7 @@ typedef struct s_mlx
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*img_ptr;
 }	t_mlx;
 
 typedef struct s_player
@@ -47,6 +49,7 @@ typedef struct s_player
 	int		radius;
 	int		turn_direction;
 	int		walk_direction;
+	int		side_movement;
 	double	rotation_angle;
 	double	move_speed;
 	double	rotation_speed;
@@ -99,6 +102,7 @@ typedef struct s_ray
 	int		is_ray_facing_left;
 	int		is_ray_facing_right;
 	int		wall_hit_content;
+	int		ray_index;
 }	t_ray;
 
 typedef struct s_ray_params
@@ -109,6 +113,15 @@ typedef struct s_ray_params
 	double	ystep;
 	double	tmp_touch;
 }	t_ray_params;
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
 
 char	**cust_split(char *str);
 
@@ -126,11 +139,11 @@ int		get_map_height(char **map);
 int		there_is_player(char **map);
 void	print_map(char **map);
 
-void	draw_filled_rectangle(t_draw_params *params);
-void	draw_filled_circle(t_draw_params *params);
+void	draw_filled_rectangle(t_draw_params *params, t_data *img);
+void	draw_filled_circle(t_draw_params *params, t_data *img);
 void	draw_map_cell(char cell, t_draw_params *params,
-			t_map *lmap);
-void	draw_line(t_draw_params *params, int end_x, int end_y);
+			t_map *lmap, t_data *img);
+void	draw_line(t_draw_params *params, int end_x, int end_y, t_data *img);
 
 void	init_player(t_player *player, char **map);
 int		is_there_wall_at(double x, double y, t_map *lmap);
@@ -140,6 +153,7 @@ void	set_coordinates(double *new_x, double *new_y,
 int		wall_collision(double x, double y, t_map *lmap);
 void	update_player_movements(t_map *lmap, int side_movement);
 
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		myclose(t_map *map);
 int		hook_key(int keycode, t_map *map);
 void	key_binding(t_mlx *mlx, t_map *map);
@@ -147,13 +161,13 @@ void	init_mlx_window(t_mlx *mlx);
 
 void	cast_all_rays(t_map *map, int is_2d);
 void	initialise_ray(t_ray *ray, double ray_angle);
-void	render_ray(t_ray *ray, t_map *map);
+void	render_ray(t_ray *ray, t_map *map, t_data *img);
 double	normalize_angle(double angle);
 double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
 void	check_vertical_intersect(t_ray *ray, t_map *map);
 
 void	display_3d_map(char **map, t_map *lmap);
-void	display_2d_map_on_screen(t_map *lmap);
+void	display_2d_map_on_screen(t_map *lmap, t_data *img);
 
 #endif

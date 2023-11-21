@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/20 14:56:40 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:38:19 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	set_player_initial_position(t_map *lmap)
 	}
 }
 
-void	display_2d_map_on_screen(t_map *lmap)
+void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 {
 	int				i;
 	int				j;
@@ -64,10 +64,9 @@ void	display_2d_map_on_screen(t_map *lmap)
 		{
 			params.x = j * TILE_SIZE;
 			params.y = i * TILE_SIZE;
-			draw_map_cell(lmap->map[i][j], &params, lmap);
+			draw_map_cell(lmap->map[i][j], &params, lmap, img);
 		}
 	}
-	cast_all_rays(lmap, 1);
 }
 
 void	display_3d_map(char **map, t_map *lmap)
@@ -83,8 +82,7 @@ void	display_3d_map(char **map, t_map *lmap)
 	lmap->mlx = &mlx;
 	lmap->map = map;
 	set_player_initial_position(lmap);
-	cast_all_rays(lmap, 0);
-	display_2d_map_on_screen(lmap);
+	cast_all_rays(lmap, 1);
 	key_binding(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
 }
