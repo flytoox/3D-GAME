@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 13:21:15 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:03:39 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	display_3d_map(char **map, t_map *lmap)
 	lmap->mlx = &mlx;
 	lmap->map = map;
 	set_player_initial_position(lmap);
-	cast_all_rays(lmap, 1);
+	cast_all_rays(lmap, WIN_WIDTH / WALL_STRIP_WIDTH, 1);
 	key_binding(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
 }

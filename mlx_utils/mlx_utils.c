@@ -6,18 +6,11 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 13:21:17 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:03:09 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int	myclose(t_map *map)
-{
-	map = 0;
-	exit(0);
-	return (0);
-}
 
 void	init_mlx_window(t_mlx *mlx)
 {
@@ -60,7 +53,7 @@ int	draw_frame(t_map *map)
 {
 	update_player_movements(map, map->player->side_movement, &map->ray);
 	mlx_clear_window(map->mlx->mlx_ptr, map->mlx->win_ptr);
-	cast_all_rays(map, 1);
+	cast_all_rays(map, WIN_WIDTH / WALL_STRIP_WIDTH, 1);
 	return (0);
 }
 
@@ -70,12 +63,4 @@ void	key_binding(t_mlx *mlx, t_map *map)
 	mlx_hook(mlx->win_ptr, 3, 0, &release_key, map);
 	mlx_hook(mlx->win_ptr, 17, 0, &myclose, map);
 	mlx_loop_hook(mlx->mlx_ptr, &draw_frame, map);
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
 }

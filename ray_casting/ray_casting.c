@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 13:20:36 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:12:00 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img)
 	double			distance_projection_plane;
 	double			wall_strip_height;
 
-	ray_distance = ray->distance * cos(ray->ray_angle - map->player->rotation_angle);
+	ray_distance = ray->distance
+		* cos(ray->ray_angle - map->player->rotation_angle);
 	distance_projection_plane = (WIN_WIDTH / 2) / tan(fov_angle / 2);
 	wall_strip_height = (TILE_SIZE / ray_distance) * distance_projection_plane;
 	params.mlx = map->mlx;
@@ -81,45 +82,20 @@ void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img)
 	params.width = WALL_STRIP_WIDTH;
 	params.height = wall_strip_height;
 	params.color = 0x00FF0000;
-	draw_line(&params, params.x + params.width - 1, params.y + params.height, img);
+	draw_line(&params, params.x + params.width - 1,
+		params.y + params.height, img);
 }
 
-void	draw_ceiling_and_floor(t_map *lmap, t_data *img)
-{
-	int				i;
-	t_draw_params	params;
-
-	i = -1;
-	params.mlx = lmap->mlx;
-	while (++i < WIN_WIDTH)
-	{
-		params.x = i;
-		params.y = 0;
-		params.height = WIN_HEIGHT / 2;
-		params.color = 0x0000FFFF;
-		draw_line(&params, params.x + 0, params.y + params.height, img);
-		params.y = WIN_HEIGHT / 2;
-		params.color = 0x00A9A9A9;
-		draw_line(&params, params.x + 0, params.y + params.height, img);
-	}
-}
-
-void	cast_all_rays(t_map *map, int is_2d)
+void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 {
 	int		i;
 	t_ray	ray;
-	double	num_rays;
 	double	ray_angle;
 	double	fov_angle;
 	t_data	img;
 
 	i = -1;
-	num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
-	fov_angle = FOV * (PI / 180);
-	ray_angle = map->player->rotation_angle - (fov_angle / 2);
-	img.img = mlx_new_image(map->mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-			&img.line_length, &img.endian);
+	init_ray_data(&fov_angle, &ray_angle, &img, map);
 	draw_ceiling_and_floor(map, &img);
 	while (++i < num_rays)
 	{
@@ -131,21 +107,7 @@ void	cast_all_rays(t_map *map, int is_2d)
 		ray_angle += fov_angle / (num_rays);
 	}
 	if (is_2d)
-	{
-		i = -1;
-		num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
-		fov_angle = FOV * (PI / 180);
-		ray_angle = map->player->rotation_angle - (fov_angle / 2);
-		display_2d_map_on_screen(map, &img);
-		while (++i < num_rays)
-		{
-			initialise_ray(&ray, ray_angle);
-			cast_ray(&ray, map);
-			ray.ray_index = i;
-			render_ray(&ray, map, &img);
-			ray_angle += fov_angle / (num_rays);
-		}
-	}
+		cast_2d_rays(map, &ray, &img);
 	mlx_put_image_to_window(map->mlx->mlx_ptr, map->mlx->win_ptr,
 		img.img, 0, 0);
 	mlx_destroy_image(map->mlx->mlx_ptr, img.img);

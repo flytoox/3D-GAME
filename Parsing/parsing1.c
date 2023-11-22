@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/20 21:15:26 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:57:06 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ void	parsing_map(int fd, char *line)
 	display_3d_map(tmp, &lmap);
 }
 
+void	init_check(int *fd, char **line, char *map, t_strp *mp)
+{
+	*fd = open_map_file(map);
+	*line = get_next_line(*fd);
+	set_my_map(mp);
+}
+
 int	check_map(char *map)
 {
 	int		fd;
@@ -92,9 +99,7 @@ int	check_map(char *map)
 
 	if (check_file_extension(map))
 		return (1);
-	fd = open_map_file(map);
-	line = get_next_line(fd);
-	set_my_map(mp);
+	init_check(&fd, &line, map, mp);
 	while (line)
 	{
 		if (start_map(line))

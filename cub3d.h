@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/22 13:12:23 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:12:39 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,13 +160,17 @@ int		hook_key(int keycode, t_map *map);
 void	key_binding(t_mlx *mlx, t_map *map);
 void	init_mlx_window(t_mlx *mlx);
 
-void	cast_all_rays(t_map *map, int is_2d);
+void	cast_all_rays(t_map *map, double num_rays, int is_2d);
+void	cast_ray(t_ray *ray, t_map *map);
 void	initialise_ray(t_ray *ray, double ray_angle);
 void	render_ray(t_ray *ray, t_map *map, t_data *img);
 double	normalize_angle(double angle);
 double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
 void	check_vertical_intersect(t_ray *ray, t_map *map);
+void	cast_2d_rays(t_map *map, t_ray *ray, t_data *img);
+void	init_ray_data(double *fov_angle, double *ray_angle, t_data *img, t_map *map);
+void	draw_ceiling_and_floor(t_map *lmap, t_data *img);
 
 void	display_3d_map(char **map, t_map *lmap);
 void	display_2d_map_on_screen(t_map *lmap, t_data *img);
