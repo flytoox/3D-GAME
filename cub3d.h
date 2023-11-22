@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/21 23:32:43 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:12:23 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define TILE_SIZE 30
+# define TILE_SIZE 32
 # define PI 3.14159265359
 # define FOV 60
-# define MINI_MAP_SCALE_FACTOR 0.2
+# define MINI_MAP_SCALE_FACTOR 0.5
 # define WALL_STRIP_WIDTH 1
 
 typedef struct pair
@@ -55,29 +55,6 @@ typedef struct s_player
 	double	rotation_speed;
 }	t_player;
 
-typedef struct s_map
-{
-	char			*s;
-	int				width;
-	int				height;
-	t_player		*player;
-	char			**map;
-	t_mlx			*mlx;
-	int				side_movement;
-	struct s_map	*next;
-}	t_map;
-
-typedef struct s_draw_params
-{
-	t_mlx	*mlx;
-	int		x;
-	int		y;
-	int		width;
-	int		height;
-	int		color;
-	int		radius;
-}	t_draw_params;
-
 typedef struct s_ray
 {
 	double	ray_angle;
@@ -104,6 +81,30 @@ typedef struct s_ray
 	int		wall_hit_content;
 	int		ray_index;
 }	t_ray;
+
+typedef struct s_map
+{
+	char			*s;
+	int				width;
+	int				height;
+	t_player		*player;
+	char			**map;
+	t_mlx			*mlx;
+	int				side_movement;
+	t_ray			ray;
+	struct s_map	*next;
+}	t_map;
+
+typedef struct s_draw_params
+{
+	t_mlx	*mlx;
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		color;
+	int		radius;
+}	t_draw_params;
 
 typedef struct s_ray_params
 {
@@ -151,7 +152,7 @@ void	reinit_player(t_player *player);
 void	set_coordinates(double *new_x, double *new_y,
 			t_map *lmap, int side_movement);
 int		wall_collision(double x, double y, t_map *lmap);
-void	update_player_movements(t_map *lmap, int side_movement);
+int		update_player_movements(t_map *lmap, int side_movement, t_ray *ray);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		myclose(t_map *map);

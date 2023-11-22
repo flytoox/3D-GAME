@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/21 23:28:10 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:21:17 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ void	init_mlx_window(t_mlx *mlx)
 
 int	hook_key(int keycode, t_map *map)
 {
-	int				side_movement;
-
-	side_movement = 0;
 	if (keycode == 53)
 		myclose(map);
 	if (keycode == 13)
@@ -42,12 +39,9 @@ int	hook_key(int keycode, t_map *map)
 	if (keycode == 124)
 		map->player->turn_direction = 1;
 	if (keycode == 0)
-		side_movement = 1;
+		map->player->side_movement = 1;
 	if (keycode == 2)
-		side_movement = -1;
-	update_player_movements(map, side_movement);
-	mlx_clear_window(map->mlx->mlx_ptr, map->mlx->win_ptr);
-	cast_all_rays(map, 1);
+		map->player->side_movement = -1;
 	return (0);
 }
 
@@ -58,7 +52,15 @@ int	release_key(int keycode, t_map *map)
 	if (keycode == 123 || keycode == 124)
 		map->player->turn_direction = 0;
 	if (keycode == 0 || keycode == 2)
-		map->side_movement = 0;
+		map->player->side_movement = 0;
+	return (0);
+}
+
+int	draw_frame(t_map *map)
+{
+	update_player_movements(map, map->player->side_movement, &map->ray);
+	mlx_clear_window(map->mlx->mlx_ptr, map->mlx->win_ptr);
+	cast_all_rays(map, 1);
 	return (0);
 }
 
@@ -67,6 +69,7 @@ void	key_binding(t_mlx *mlx, t_map *map)
 	mlx_hook(mlx->win_ptr, 2, 0, &hook_key, map);
 	mlx_hook(mlx->win_ptr, 3, 0, &release_key, map);
 	mlx_hook(mlx->win_ptr, 17, 0, &myclose, map);
+	mlx_loop_hook(mlx->mlx_ptr, &draw_frame, map);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
