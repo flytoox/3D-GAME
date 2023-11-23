@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:10:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 16:11:50 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:05:08 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	cast_2d_rays(t_map *map, t_ray *ray, t_data *img)
 	int		num_rays;
 	double	ray_angle;
 	double	fov_angle;
-	
 
 	i = -1;
 	num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
@@ -35,13 +34,19 @@ void	cast_2d_rays(t_map *map, t_ray *ray, t_data *img)
 	}
 }
 
-void	init_ray_data(double *fov_angle, double *ray_angle, t_data *img, t_map *map)
+void	init_ray_data(double *fov_angle,
+	double *ray_angle, t_data *img, t_map *map)
 {
 	*fov_angle = FOV * (PI / 180);
 	*ray_angle = map->player->rotation_angle - (*fov_angle / 2);
 	img->img = mlx_new_image(map->mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
+}
+
+int create_rgb(int red, int green, int blue, int alpha)
+{
+	return (alpha << 24 | red << 16 | green << 8 | blue);
 }
 
 void	draw_ceiling_and_floor(t_map *lmap, t_data *img)
@@ -56,10 +61,10 @@ void	draw_ceiling_and_floor(t_map *lmap, t_data *img)
 		params.x = i;
 		params.y = 0;
 		params.height = WIN_HEIGHT / 2;
-		params.color = 0x0000FFFF;
+		params.color = create_rgb(0, 255, 255, 10);
 		draw_line(&params, params.x + 0, params.y + params.height, img);
 		params.y = WIN_HEIGHT / 2;
-		params.color = 0x00A9A9A9;
+		params.color = create_rgb(192, 192, 192, 50);
 		draw_line(&params, params.x + 0, params.y + params.height, img);
 	}
 }

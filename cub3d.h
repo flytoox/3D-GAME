@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/22 16:12:39 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:51:29 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define TILE_SIZE 32
 # define PI 3.14159265359
 # define FOV 60
-# define MINI_MAP_SCALE_FACTOR 0.5
+# define MINI_MAP_SCALE_FACTOR 0.3
 # define WALL_STRIP_WIDTH 1
 
 typedef struct pair
@@ -124,6 +124,16 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+typedef struct s_draw_line
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+}	t_draw_line;
+
 char	**cust_split(char *str);
 
 bool	good_element(char **tmp, t_strp mp[7]);
@@ -169,10 +179,13 @@ double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
 void	check_vertical_intersect(t_ray *ray, t_map *map);
 void	cast_2d_rays(t_map *map, t_ray *ray, t_data *img);
-void	init_ray_data(double *fov_angle, double *ray_angle, t_data *img, t_map *map);
+void	init_ray_data(double *fov_angle,
+			double *ray_angle, t_data *img, t_map *map);
 void	draw_ceiling_and_floor(t_map *lmap, t_data *img);
 
 void	display_3d_map(char **map, t_map *lmap);
 void	display_2d_map_on_screen(t_map *lmap, t_data *img);
+
+int		create_rgb(int red, int green, int blue, int alpha);
 
 #endif

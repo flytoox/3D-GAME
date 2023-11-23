@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 16:12:00 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:04:34 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img)
 	params.y = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
 	params.width = WALL_STRIP_WIDTH;
 	params.height = wall_strip_height;
-	params.color = 0x00FF0000;
+	params.color = create_rgb(255, 0, 0, 0);
 	draw_line(&params, params.x + params.width - 1,
 		params.y + params.height, img);
 }

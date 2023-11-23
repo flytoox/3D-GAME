@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 16:03:39 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:45:37 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,8 @@ int	update_player_movements(t_map *lmap, int side_movement, t_ray *ray)
 	lmap->player->rotation_angle += lmap->player->turn_direction
 		* lmap->player->rotation_speed;
 	set_coordinates(&new_x, &new_y, lmap, side_movement);
-	check_x	= new_x;
-	check_y	= new_y;
-	// if (ray->is_ray_facing_up)
-	// 	check_y -= 5;
-	// else
-	// 	check_y += 5;
-	// if (ray->is_ray_facing_left)
-	// 	check_x -= 5;
-	// else
-	// 	check_x += 5;
+	check_x = new_x;
+	check_y = new_y;
 	(void)ray;
 	if (!is_there_wall_at(check_x, check_y, lmap))
 	{
@@ -74,12 +66,13 @@ void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 	params.mlx = lmap->mlx;
 	while (lmap->map[++i])
 	{
-		j = -1;
-		while (lmap->map[i][++j])
+		j = 0;
+		while (lmap->map[i][j])
 		{
 			params.x = j * TILE_SIZE * MINI_MAP_SCALE_FACTOR;
 			params.y = i * TILE_SIZE * MINI_MAP_SCALE_FACTOR;
 			draw_map_cell(lmap->map[i][j], &params, lmap, img);
+			j++;
 		}
 	}
 }

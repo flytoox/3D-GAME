@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:36:08 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 08:42:24 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:40:16 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	render_ray(t_ray *ray, t_map *map, t_data *img)
 	params.x = map->player->x * MINI_MAP_SCALE_FACTOR;
 	params.y = map->player->y * MINI_MAP_SCALE_FACTOR;
 	params.color = 0x00FF0000;
-	draw_line(&params, ray->wall_hit_x * MINI_MAP_SCALE_FACTOR, ray->wall_hit_y * MINI_MAP_SCALE_FACTOR, img);
+	draw_line(&params, ray->wall_hit_x * MINI_MAP_SCALE_FACTOR,
+		ray->wall_hit_y * MINI_MAP_SCALE_FACTOR, img);
 }
 
 double	normalize_angle(double angle)

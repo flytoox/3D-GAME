@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 15:49:48 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:45:50 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	draw_filled_rectangle(t_draw_params *params, t_data *img)
 		{
 			if (i == 0 || i == params->height - 1
 				|| j == 0 || j == params->width - 1)
-				my_mlx_pixel_put(img, params->x + j, params->y + i, 0x00A9A9A9);
+				my_mlx_pixel_put(img, params->x + j,
+					params->y + i, 0x00A9A9A9);
 			else
 				my_mlx_pixel_put(img, params->x + j,
 					params->y + i, params->color);
