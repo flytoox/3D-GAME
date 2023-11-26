@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/23 15:04:34 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:35:27 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	draw_rectangle(t_draw_params *params, t_data *img)
 	}
 }
 
-void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img)
+void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img, t_data *texture)
 {
 	t_draw_params	params;
 	double			ray_distance;
@@ -82,8 +82,11 @@ void	render_ray_3d(t_ray *ray, t_map *map, double fov_angle, t_data *img)
 	params.width = WALL_STRIP_WIDTH;
 	params.height = wall_strip_height;
 	params.color = create_rgb(255, 0, 0, 0);
-	draw_line(&params, params.x + params.width - 1,
-		params.y + params.height, img);
+	ray->wall_strip_height = wall_strip_height;
+	ray->wall_top_pixel = params.y;
+	print_texture_from_image(ray, img, texture);
+	// draw_line(&params, params.x + params.width - 1,
+	// 	params.y + params.height, img);
 }
 
 void	cast_all_rays(t_map *map, double num_rays, int is_2d)
@@ -93,8 +96,13 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 	double	ray_angle;
 	double	fov_angle;
 	t_data	img;
+	t_data	texture;
 
 	i = -1;
+	texture.img = mlx_xpm_file_to_image(map->mlx, "./textures/wall.xpm",
+			&texture.width, &texture.height);
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bits_per_pixel,
+			&texture.line_length, &texture.endian);
 	init_ray_data(&fov_angle, &ray_angle, &img, map);
 	draw_ceiling_and_floor(map, &img);
 	while (++i < num_rays)
@@ -102,8 +110,7 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 		initialise_ray(&ray, ray_angle);
 		cast_ray(&ray, map);
 		ray.ray_index = i;
-		render_ray_3d(&ray, map, fov_angle, &img);
-		map->ray = ray;
+		render_ray_3d(&ray, map, fov_angle, &img, &texture);
 		ray_angle += fov_angle / (num_rays);
 	}
 	if (is_2d)
@@ -111,4 +118,5 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 	mlx_put_image_to_window(map->mlx->mlx_ptr, map->mlx->win_ptr,
 		img.img, 0, 0);
 	mlx_destroy_image(map->mlx->mlx_ptr, img.img);
+	mlx_destroy_image(map->mlx->mlx_ptr, texture.img);
 }

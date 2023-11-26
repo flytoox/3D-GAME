@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 16:03:09 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/23 20:38:33 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	release_key(int keycode, t_map *map)
 
 int	draw_frame(t_map *map)
 {
-	update_player_movements(map, map->player->side_movement, &map->ray);
+	update_player_movements(map, map->player->side_movement);
 	mlx_clear_window(map->mlx->mlx_ptr, map->mlx->win_ptr);
 	cast_all_rays(map, WIN_WIDTH / WALL_STRIP_WIDTH, 1);
 	return (0);

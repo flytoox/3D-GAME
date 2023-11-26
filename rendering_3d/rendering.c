@@ -6,13 +6,13 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/23 15:45:37 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/24 14:32:18 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	update_player_movements(t_map *lmap, int side_movement, t_ray *ray)
+int	update_player_movements(t_map *lmap, int side_movement)
 {
 	double	new_x;
 	double	new_y;
@@ -24,8 +24,15 @@ int	update_player_movements(t_map *lmap, int side_movement, t_ray *ray)
 	set_coordinates(&new_x, &new_y, lmap, side_movement);
 	check_x = new_x;
 	check_y = new_y;
-	(void)ray;
-	if (!is_there_wall_at(check_x, check_y, lmap))
+	if (check_x > lmap->player->x)
+		check_x += 8;
+	else if (check_x < lmap->player->x)
+		check_x -= 8;
+	if (check_y > lmap->player->y)
+		check_y += 8;
+	else if (check_y < lmap->player->y)
+		check_y -= 8;
+	if (!is_there_wall_at(new_x, new_y, lmap) && !is_there_wall_at(check_x, check_y, lmap))
 	{
 		lmap->player->x = new_x;
 		lmap->player->y = new_y;
@@ -66,13 +73,12 @@ void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 	params.mlx = lmap->mlx;
 	while (lmap->map[++i])
 	{
-		j = 0;
-		while (lmap->map[i][j])
+		j = -1;
+		while (lmap->map[i][++j])
 		{
 			params.x = j * TILE_SIZE * MINI_MAP_SCALE_FACTOR;
 			params.y = i * TILE_SIZE * MINI_MAP_SCALE_FACTOR;
 			draw_map_cell(lmap->map[i][j], &params, lmap, img);
-			j++;
 		}
 	}
 }
