@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/26 18:25:06 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/26 22:28:17 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,17 @@ typedef struct s_ray
 	double	wall_top_pixel;
 }	t_ray;
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_data;
+
 typedef struct s_map
 {
 	char			*s;
@@ -93,6 +104,7 @@ typedef struct s_map
 	char			**map;
 	t_mlx			*mlx;
 	int				side_movement;
+	t_data			*texture;
 	struct s_map	*next;
 }	t_map;
 
@@ -115,17 +127,6 @@ typedef struct s_ray_params
 	double	ystep;
 	double	tmp_touch;
 }	t_ray_params;
-
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-}	t_data;
 
 typedef struct s_draw_line
 {
@@ -192,6 +193,8 @@ void	display_2d_map_on_screen(t_map *lmap, t_data *img);
 int		create_rgb(int red, int green, int blue, int alpha);
 int		get_pixel_color(t_data *data, int x, int y);
 
+void	open_textures(t_map *map, t_data *texture);
 void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture);
+void	destroy_textures(void *mlx, t_data *texture);
 
 #endif

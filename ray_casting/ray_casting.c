@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/26 18:09:51 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/26 22:27:07 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,8 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 	double	ray_angle;
 	double	fov_angle;
 	t_data	img;
-	t_data	texture[4];
 
 	i = -1;
-	open_textures(map, texture);
 	init_ray_data(&fov_angle, &ray_angle, &img, map);
 	draw_ceiling_and_floor(map, &img);
 	while (++i < num_rays)
@@ -138,13 +136,13 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 		ray.ray_index = i;
 		/*check if wall is on north or sounth or west or east to draw correspanding texture*/
 		if (ray.was_hit_vertical && ray.is_ray_facing_left)
-			render_ray_3d(&ray, map, fov_angle, &img, &texture[1]);
+			render_ray_3d(&ray, map, fov_angle, &img, &map->texture[1]);
 		else if (ray.was_hit_vertical && ray.is_ray_facing_right)
-			render_ray_3d(&ray, map, fov_angle, &img, &texture[1]);
+			render_ray_3d(&ray, map, fov_angle, &img, &map->texture[1]);
 		else if (!ray.was_hit_vertical && ray.is_ray_facing_up)
-			render_ray_3d(&ray, map, fov_angle, &img, &texture[2]);
+			render_ray_3d(&ray, map, fov_angle, &img, &map->texture[2]);
 		else if (!ray.was_hit_vertical && ray.is_ray_facing_down)
-			render_ray_3d(&ray, map, fov_angle, &img, &texture[2]);
+			render_ray_3d(&ray, map, fov_angle, &img, &map->texture[2]);
 		ray_angle += fov_angle / (num_rays);
 	}
 	if (is_2d)
@@ -152,5 +150,4 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 	mlx_put_image_to_window(map->mlx->mlx_ptr, map->mlx->win_ptr,
 		img.img, 0, 0);
 	mlx_destroy_image(map->mlx->mlx_ptr, img.img);
-	destroy_textures(map->mlx->mlx_ptr, texture);
 }

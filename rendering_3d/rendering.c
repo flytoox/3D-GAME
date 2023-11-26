@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/24 14:32:18 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/26 22:29:27 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	display_3d_map(char **map, t_map *lmap)
 	t_mlx			mlx;
 	t_player		player;
 	t_draw_params	params;
+	t_data			texture[4];
 
 	init_mlx_window(&mlx);
 	init_player(&player, map);
@@ -96,7 +97,10 @@ void	display_3d_map(char **map, t_map *lmap)
 	lmap->mlx = &mlx;
 	lmap->map = map;
 	set_player_initial_position(lmap);
+	open_textures(lmap, texture);
+	lmap->texture = texture;
 	cast_all_rays(lmap, WIN_WIDTH / WALL_STRIP_WIDTH, 1);
 	key_binding(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
+	destroy_textures(lmap->mlx->mlx_ptr, lmap->texture);
 }
