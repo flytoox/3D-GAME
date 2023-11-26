@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/26 15:30:50 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:25:06 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define TILE_SIZE 32
+# define TILE_SIZE 64
 # define PI 3.14159265359
 # define FOV 60
-# define MINI_MAP_SCALE_FACTOR 0.3
+# define MINI_MAP_SCALE_FACTOR 0.1
 # define WALL_STRIP_WIDTH 1
 
 typedef struct pair
