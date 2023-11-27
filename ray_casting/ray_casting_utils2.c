@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:10:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/23 15:05:08 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:03:23 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_ray_data(double *fov_angle,
 			&img->line_length, &img->endian);
 }
 
-int create_rgb(int red, int green, int blue, int alpha)
+int	create_rgb(int red, int green, int blue, int alpha)
 {
 	return (alpha << 24 | red << 16 | green << 8 | blue);
 }

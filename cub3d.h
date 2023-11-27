@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/26 22:28:17 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:04:31 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_ray
 	int		is_ray_facing_right;
 	int		wall_hit_content;
 	int		ray_index;
-	double 	wall_strip_height;
+	double	wall_strip_height;
 	double	wall_top_pixel;
 }	t_ray;
 
@@ -104,6 +104,7 @@ typedef struct s_map
 	char			**map;
 	t_mlx			*mlx;
 	int				side_movement;
+	double			fov_angle;
 	t_data			*texture;
 	struct s_map	*next;
 }	t_map;
@@ -166,7 +167,7 @@ void	reinit_player(t_player *player);
 void	set_coordinates(double *new_x, double *new_y,
 			t_map *lmap, int side_movement);
 int		wall_collision(double x, double y, t_map *lmap);
-int		update_player_movements(t_map *lmap, int side_movement);
+void	update_player_movements(t_map *lmap, int side_movement);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		myclose(t_map *map);
@@ -189,12 +190,14 @@ void	draw_ceiling_and_floor(t_map *lmap, t_data *img);
 
 void	display_3d_map(char **map, t_map *lmap);
 void	display_2d_map_on_screen(t_map *lmap, t_data *img);
+void	render_ray_3d(t_ray *ray, t_map *map, t_data *img, t_data *texture);
 
 int		create_rgb(int red, int green, int blue, int alpha);
 int		get_pixel_color(t_data *data, int x, int y);
 
 void	open_textures(t_map *map, t_data *texture);
 void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture);
+void	render_texture(t_ray *ray, t_map *map, t_data *img);
 void	destroy_textures(void *mlx, t_data *texture);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/26 22:29:27 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:04:48 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	update_player_movements(t_map *lmap, int side_movement)
+void	update_player_movements(t_map *lmap, int side_movement)
 {
 	double	new_x;
 	double	new_y;
@@ -32,13 +32,12 @@ int	update_player_movements(t_map *lmap, int side_movement)
 		check_y += 8;
 	else if (check_y < lmap->player->y)
 		check_y -= 8;
-	if (!is_there_wall_at(new_x, new_y, lmap) && !is_there_wall_at(check_x, check_y, lmap))
+	if (!is_there_wall_at(new_x, new_y, lmap)
+		&& !is_there_wall_at(check_x, check_y, lmap))
 	{
 		lmap->player->x = new_x;
 		lmap->player->y = new_y;
-		return (1);
 	}
-	return (0);
 }
 
 void	set_player_initial_position(t_map *lmap)
