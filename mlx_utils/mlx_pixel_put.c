@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mlx_pixel_put.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 21:46:33 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/20 15:12:18 by aait-mal         ###   ########.fr       */
+/*   Created: 2023/11/22 15:51:41 by aait-mal          #+#    #+#             */
+/*   Updated: 2023/11/27 14:49:54 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-int	main(int argc, char **argv)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	if (argc != 2)
-		return (ft_putstr_fd("Error\nWrong number of arguments\n", 2), 1);
-	if (check_map(argv[1]))
-		exit(1);
+	char	*dst;
+
+	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
+		return ;
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
+int	myclose(t_map *map)
+{
+	map = 0;
+	exit(0);
+	return (0);
 }

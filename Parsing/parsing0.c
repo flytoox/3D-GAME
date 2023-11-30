@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 22:15:19 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/10 10:10:14 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/20 21:17:32 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,15 @@ char	**lst_tochar(t_lst *map)
 	char	**ret;
 	int		i;
 
-	i = 0;
+	if (!map)
+		return (NULL);
 	ret = malloc(sizeof(char *) * (ft_lstsize(map) + 1));
-	ret[i] = NULL;
 	i = 0;
 	while (map)
 	{
-		ret[i] = map->data;
+		ret[i] = (char *)map->data;
 		i++;
 		map = map->next;
 	}
-	return (ret);
+	return (ret[i] = NULL, ret);
 }
