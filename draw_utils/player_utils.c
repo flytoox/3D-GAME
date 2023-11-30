@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:33:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/26 22:31:34 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:40:04 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	init_player(t_player *player, char **map)
 	player->walk_direction = 0;
 	player->side_movement = 0;
 	player->rotation_angle = get_player_rotation_angle(map);
-	player->move_speed = 3.5;
-	player->rotation_speed = 2 * (PI / 180);
+	player->move_speed = 3;
+	player->rotation_speed = 1.5 * (PI / 180);
 }
 
 void	reinit_player(t_player *player)
@@ -61,6 +61,9 @@ int	is_there_wall_at(double x, double y, t_map *lmap)
 	int	map_index_y;
 	int	ret;
 
+	if (x < 0 || x >= lmap->width * TILE_SIZE
+		|| y < 0 || y >= lmap->height * TILE_SIZE)
+		return (1);
 	map_index_x = floor(x / TILE_SIZE);
 	map_index_y = floor(y / TILE_SIZE);
 	if (map_index_x < 0 || map_index_x >= lmap->width

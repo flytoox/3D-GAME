@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/27 15:04:31 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:45:29 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define FOV 60
 # define MINI_MAP_SCALE_FACTOR 0.1
 # define WALL_STRIP_WIDTH 1
+# define MIN_DISTANCE_FROM_WALL 20
 
 typedef struct pair
 {
@@ -191,6 +192,9 @@ void	draw_ceiling_and_floor(t_map *lmap, t_data *img);
 void	display_3d_map(char **map, t_map *lmap);
 void	display_2d_map_on_screen(t_map *lmap, t_data *img);
 void	render_ray_3d(t_ray *ray, t_map *map, t_data *img, t_data *texture);
+int		is_collision_on_line(double x1, double y1, t_map *lmap, int steps);
+void	keep_player_far_from_wall(double *check_x, double *check_y,
+			t_map *lmap);
 
 int		create_rgb(int red, int green, int blue, int alpha);
 int		get_pixel_color(t_data *data, int x, int y);

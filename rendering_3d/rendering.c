@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/27 15:04:48 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:45:43 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,15 @@ void	update_player_movements(t_map *lmap, int side_movement)
 	set_coordinates(&new_x, &new_y, lmap, side_movement);
 	check_x = new_x;
 	check_y = new_y;
-	if (check_x > lmap->player->x)
-		check_x += 8;
-	else if (check_x < lmap->player->x)
-		check_x -= 8;
-	if (check_y > lmap->player->y)
-		check_y += 8;
-	else if (check_y < lmap->player->y)
-		check_y -= 8;
-	if (!is_there_wall_at(new_x, new_y, lmap)
-		&& !is_there_wall_at(check_x, check_y, lmap))
+	keep_player_far_from_wall(&check_x, &check_y, lmap);
+	if (new_x >= 0 && new_x < lmap->width * TILE_SIZE
+		&& new_y >= 0 && new_y < lmap->height * TILE_SIZE)
 	{
-		lmap->player->x = new_x;
-		lmap->player->y = new_y;
+		if (!is_collision_on_line(check_x, check_y, lmap, 200))
+		{
+			lmap->player->x = new_x;
+			lmap->player->y = new_y;
+		}
 	}
 }
 
