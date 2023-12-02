@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:02:29 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/10 10:08:34 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:03:31 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nitems, size_t size);
 char	*ft_strdup(const char *src);
 
+void	free_tab(char **str);
+
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -64,10 +66,10 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
 t_lst	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_lst **lst, t_lst *new);
+void	ft_lstadd_front(t_lst **lst, t_lst *nw);
 int		ft_lstsize(t_lst *lst);
 t_lst	*ft_lstlast(t_lst *lst);
-void	ft_lstadd_back(t_lst **lst, t_lst *new);
+void	ft_lstadd_back(t_lst **lst, t_lst *nw);
 void	ft_lstdelone(t_lst *lst);
 void	ft_lstclear(t_lst **lst);
 void	ft_lstiter(t_lst *lst, void (*f)(void *));

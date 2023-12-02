@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+         #
+#    By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 21:42:53 by obelaizi          #+#    #+#              #
-#    Updated: 2023/11/22 08:58:49 by aait-mal         ###   ########.fr        #
+#    Updated: 2023/12/01 18:44:12 by obelaizi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ libft.a :
 	make -C libft all bonus
 
 $(NAME) :  $(OBJ) ./libft/libft.a
-	$(CC) $(OBJ) $(FLAGS) ./libft/libft.a  -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJ) $(FLAGS) ./libft/libft.a  -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@

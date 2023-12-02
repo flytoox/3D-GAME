@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 22:15:19 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/20 21:17:32 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:09:06 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	good_element(char **tmp, t_strp mp[7])
 			return (mp[i].second = tmp[1], 1);
 		}
 	}
-	return (printf("|%s|\n", tmp[0]), 0);
+	return (0);
 }
 
 void	set_my_map(t_strp mp[6])
@@ -83,6 +83,7 @@ char	**lst_tochar(t_lst *map)
 {
 	char	**ret;
 	int		i;
+	int		j;
 
 	if (!map)
 		return (NULL);
@@ -91,6 +92,7 @@ char	**lst_tochar(t_lst *map)
 	while (map)
 	{
 		ret[i] = (char *)map->data;
+		j = 0;
 		i++;
 		map = map->next;
 	}

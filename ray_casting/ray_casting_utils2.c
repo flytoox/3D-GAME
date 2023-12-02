@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:10:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/27 15:03:23 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:13:14 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ void	draw_ceiling_and_floor(t_map *lmap, t_data *img)
 		params.x = i;
 		params.y = 0;
 		params.height = WIN_HEIGHT / 2;
-		params.color = create_rgb(0, 255, 255, 10);
+		params.color = create_rgb(lmap->clrs.ceilng[0], lmap->clrs.ceilng[1],
+				lmap->clrs.ceilng[2], 0);
 		draw_line(&params, params.x + 0, params.y + params.height, img);
 		params.y = WIN_HEIGHT / 2;
-		params.color = create_rgb(192, 192, 192, 50);
+		params.color = create_rgb(lmap->clrs.flr[0], lmap->clrs.flr[1],
+				lmap->clrs.flr[2], 0);
 		draw_line(&params, params.x + 0, params.y + params.height, img);
 	}
 }

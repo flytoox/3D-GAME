@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/11/30 15:45:29 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:36:02 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@
 # define WALL_STRIP_WIDTH 1
 # define MIN_DISTANCE_FROM_WALL 20
 
+typedef struct colors
+{
+	int		flr[3];
+	int		ceilng[3];
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+}	t_colors;
 typedef struct pair
 {
 	char	*first;
@@ -107,6 +116,7 @@ typedef struct s_map
 	int				side_movement;
 	double			fov_angle;
 	t_data			*texture;
+	t_colors		clrs;
 	struct s_map	*next;
 }	t_map;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 15:57:06 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:40:57 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,47 @@ bool	check_closed(char **map, int n)
 	return (1);
 }
 
-void	parsing_map(int fd, char *line)
+void	fill_colors(int arr[], char **s)
+{
+	arr[0] = ft_atoi(s[0]);
+	if (arr[0] == -1)
+		return (printf("The colors should be between 0 and 255"), exit(1));
+	arr[1] = ft_atoi(s[1]);
+	if (arr[1] == -1)
+		return (printf("The colors should be between 0 and 255"), exit(1));
+	arr[2] = ft_atoi(s[2]);
+	if (arr[2] == -1)
+		return (printf("The colors should be between 0 and 255"), exit(1));
+}
+
+void	set_colors(t_map *lmap, t_strp clrs[])
+{
+	char	**ret;
+	int		i;
+
+	ret = ft_split(clrs[4].second, ',');
+	i = -1;
+	while (ret[++i])
+		;
+	if (i != 3)
+		return (printf("There is an error on the floor\n"), exit(1));
+	fill_colors(lmap->clrs.flr, ret);
+	free_tab(ret);
+	ret = ft_split(clrs[5].second, ',');
+	i = -1;
+	while (ret[++i])
+		;
+	if (i != 3)
+		return (printf("There is an error on the ceiling\n"), exit(1));
+	fill_colors(lmap->clrs.ceilng, ret);
+	free_tab(ret);
+	lmap->clrs.no = clrs[0].second;
+	lmap->clrs.so = clrs[1].second;
+	lmap->clrs.we = clrs[2].second;
+	lmap->clrs.ea = clrs[3].second;
+}
+
+void	parsing_map(int fd, char *line, t_strp clrs[])
 {
 	t_lst	*map;
 	char	**mp;
@@ -76,10 +116,11 @@ void	parsing_map(int fd, char *line)
 	tmp = copy_map(mp);
 	if (!there_is_player(mp))
 		return (ft_putstr_fd("Player error\n", 2), exit(1));
-	else if (!check_closed(lst_tochar(map), ft_lstsize(map)))
+	if (!check_closed(lst_tochar(map), ft_lstsize(map)))
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
 	lmap.height = ft_lstsize(map) * TILE_SIZE;
 	lmap.width = get_length(mp) * TILE_SIZE;
+	set_colors(&lmap, clrs);
 	display_3d_map(tmp, &lmap);
 }
 
@@ -109,12 +150,12 @@ int	check_map(char *map)
 		line = get_next_line(fd);
 		if (!good_element(tmp, mp))
 			return (ft_putstr_fd("Error\nWrong element\n", 2), 1);
+		free(tmp[0]);
 		free(tmp);
 	}
 	if (!line)
 		return (ft_putstr_fd("Error\nNo map\n", 2), 1);
 	if (check_map_last(mp))
 		return (1);
-	parsing_map(fd, line);
-	return (0);
+	return (parsing_map(fd, line, mp), 0);
 }

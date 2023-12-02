@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:44:35 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/27 15:06:46 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:50:22 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,26 @@ void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture)
 
 void	open_textures(t_map *map, t_data *texture)
 {
-	texture[0].img = mlx_xpm_file_to_image(map->mlx, "./textures/wall.xpm",
+	texture[0].img = mlx_xpm_file_to_image(map->mlx, map->clrs.ea,
 			&texture[0].width, &texture[0].height);
+	texture[1].img = mlx_xpm_file_to_image(map->mlx, map->clrs.we,
+			&texture[1].width, &texture[1].height);
+	texture[2].img = mlx_xpm_file_to_image(map->mlx, map->clrs.no,
+			&texture[2].width, &texture[2].height);
+	texture[3].img = mlx_xpm_file_to_image(map->mlx, map->clrs.so,
+			&texture[3].width, &texture[3].height);
+	if (!texture[0].img || !texture[1].img
+		|| !texture[2].img || !texture[3].img)
+		return (printf("Error on opening textures\n"), exit(1));
 	texture[0].addr = mlx_get_data_addr(texture[0].img,
 			&texture[0].bits_per_pixel, &texture[0].line_length,
 			&texture[0].endian);
-	texture[1].img = mlx_xpm_file_to_image(map->mlx, "./textures/wall2.xpm",
-			&texture[1].width, &texture[1].height);
 	texture[1].addr = mlx_get_data_addr(texture[1].img,
 			&texture[1].bits_per_pixel, &texture[1].line_length,
 			&texture[1].endian);
-	texture[2].img = mlx_xpm_file_to_image(map->mlx, "./textures/wall3.xpm",
-			&texture[2].width, &texture[2].height);
 	texture[2].addr = mlx_get_data_addr(texture[2].img,
 			&texture[2].bits_per_pixel, &texture[2].line_length,
 			&texture[2].endian);
-	texture[3].img = mlx_xpm_file_to_image(map->mlx, "./textures/wall4.xpm",
-			&texture[3].width, &texture[3].height);
 	texture[3].addr = mlx_get_data_addr(texture[3].img,
 			&texture[3].bits_per_pixel, &texture[3].line_length,
 			&texture[3].endian);
@@ -79,11 +82,11 @@ void	destroy_textures(void *mlx, t_data *texture)
 void	render_texture(t_ray *ray, t_map *map, t_data *img)
 {
 	if (ray->was_hit_vertical && ray->is_ray_facing_left)
-		render_ray_3d(ray, map, img, &map->texture[1]);
+		render_ray_3d(ray, map, img, &map->texture[0]);
 	else if (ray->was_hit_vertical && ray->is_ray_facing_right)
 		render_ray_3d(ray, map, img, &map->texture[1]);
 	else if (!ray->was_hit_vertical && ray->is_ray_facing_up)
 		render_ray_3d(ray, map, img, &map->texture[2]);
 	else if (!ray->was_hit_vertical && ray->is_ray_facing_down)
-		render_ray_3d(ray, map, img, &map->texture[2]);
+		render_ray_3d(ray, map, img, &map->texture[3]);
 }
