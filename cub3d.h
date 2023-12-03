@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:36:02 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/03 12:45:52 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
 # include <math.h>
-// # include "./mlx/mlx.h"
-# include <mlx.h>
+# include "./mlx/mlx.h"
+// # include <mlx.h>
 # include <stdbool.h>
 # include <limits.h>
 

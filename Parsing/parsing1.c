@@ -6,11 +6,12 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/02 22:40:57 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/03 13:15:31 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <stdbool.h>
 
 bool	is_itclosed(char **map, int n, int x, int y)
 {
@@ -46,7 +47,7 @@ bool	check_closed(char **map, int n)
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == '0' && !is_itclosed(map, n, x, y))
+			if ((ft_strchr("0NSWE", map[y][x])) && !is_itclosed(map, n, x, y))
 				return (print_map(map), 0);
 			x++;
 		}
@@ -95,6 +96,24 @@ void	set_colors(t_map *lmap, t_strp clrs[])
 	lmap->clrs.ea = clrs[3].second;
 }
 
+bool	unkown_char(char **mp)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (mp[++j])
+	{
+		i = -1;
+		printf("|%s|\n", mp[j]);
+		while (mp[j][++i])
+			if (!ft_strchr("NSEW01 ", mp[j][i]))
+				return (printf("Don't enter something sus on the map pls\n"),
+					exit(1), true);
+	}
+	return (false);
+}
+
 void	parsing_map(int fd, char *line, t_strp clrs[])
 {
 	t_lst	*map;
@@ -109,12 +128,15 @@ void	parsing_map(int fd, char *line, t_strp clrs[])
 		line = get_next_line(fd);
 	}
 	while (line && !*line)
+	{
+		free(line);
 		line = get_next_line(fd);
+	}
 	if (line)
 		return (ft_putstr_fd("Error\nMap should be the last;)\n", 2), exit(1));
 	mp = lst_tochar(map);
 	tmp = copy_map(mp);
-	if (!there_is_player(mp))
+	if (unkown_char(mp) || !there_is_player(mp))
 		return (ft_putstr_fd("Player error\n", 2), exit(1));
 	if (!check_closed(lst_tochar(map), ft_lstsize(map)))
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
@@ -156,6 +178,6 @@ int	check_map(char *map)
 	if (!line)
 		return (ft_putstr_fd("Error\nNo map\n", 2), 1);
 	if (check_map_last(mp))
-		return (1);
+		return (exit(1), 1);
 	return (parsing_map(fd, line, mp), 0);
 }
