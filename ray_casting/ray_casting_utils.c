@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:36:08 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/22 16:40:16 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:23:28 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	wall_collision(double x, double y, t_map *lmap)
 	map_index_y = floor(y / TILE_SIZE);
 	if (map_index_x < 0 || map_index_x >= lmap->width
 		|| map_index_y < 0 || map_index_y >= lmap->height
-		|| (lmap->map[map_index_y][map_index_x] != '1'
-		&& lmap->map[map_index_y][map_index_x] != '0'
-		&& lmap->map[map_index_y][map_index_x] != 'N'))
+		|| (!ft_strchr("0SNEW", lmap->map[map_index_y][map_index_x])))
 		ret = 1;
 	else
 		ret = lmap->map[map_index_y][map_index_x] == '1';
