@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/03 18:11:48 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:15:14 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ char	**copy_map(char **map);
 int		get_length(char **map);
 int		get_map_height(char **map);
 int		there_is_player(char **map);
-void	print_map(char **map);
 
 void	draw_filled_rectangle(t_draw_params *params, t_data *img);
 void	draw_filled_circle(t_draw_params *params, t_data *img);
@@ -214,5 +213,9 @@ void	open_textures(t_map *map, t_data *texture);
 void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture);
 void	render_texture(t_ray *ray, t_map *map, t_data *img);
 void	destroy_textures(void *mlx, t_data *texture);
+
+void	fill_colors(int arr[], char **s);
+bool	unkown_char(char **mp);
+bool	is_itclosed(char **map, int n, int x, int y);
 
 #endif

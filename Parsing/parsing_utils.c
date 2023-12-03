@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:26:12 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/20 15:28:50 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:13:32 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ int	there_is_player(char **map)
 	return (player == 1);
 }
 
-void	print_map(char **map)
-{
-	int	i;
-
-	if (!map)
-		return ;
-	i = 0;
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-}
-
 int	get_map_height(char **map)
 {
 	int	i;
@@ -101,4 +87,17 @@ char	**copy_map(char **map)
 	}
 	ret[i] = 0;
 	return (ret);
+}
+
+void	fill_colors(int arr[], char **s)
+{
+	arr[0] = ft_atoi(s[0]);
+	if (arr[0] == -1)
+		return (printf("The colors should be between 0 and 255"), exit(1));
+	arr[1] = ft_atoi(s[1]);
+	if (arr[1] == -1)
+		return (printf("The colors should be between 0 and 255"), exit(1));
+	arr[2] = ft_atoi(s[2]);
+	if (arr[2] == -1)
+		return (printf("The colors should be between 0 and 255"), exit(1));
 }
