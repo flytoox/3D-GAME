@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/23 20:38:33 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:15:35 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ int	hook_key(int keycode, t_map *map)
 		map->player->side_movement = 1;
 	if (keycode == 2)
 		map->player->side_movement = -1;
+	if (keycode == 257)
+		map->player->move_speed *= 2;
+	if (keycode == 256)
+	{
+		map->toogle_mouse = !map->toogle_mouse;
+		if (!map->toogle_mouse)
+			mlx_mouse_hide();
+		else
+			mlx_mouse_show();
+	}
 	return (0);
 }
 
@@ -46,6 +56,8 @@ int	release_key(int keycode, t_map *map)
 		map->player->turn_direction = 0;
 	if (keycode == 0 || keycode == 2)
 		map->player->side_movement = 0;
+	if (keycode == 257)
+		map->player->move_speed /= 2;
 	return (0);
 }
 
@@ -57,10 +69,26 @@ int	draw_frame(t_map *map)
 	return (0);
 }
 
+int mousemove(int x, int y, t_map *map)
+{
+	(void)y;
+	double x1 = WIN_WIDTH / 2;
+	if (!map->toogle_mouse)
+	{
+		mlx_mouse_move(map->mlx->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+		x1 = x - x1;
+		map->player->rotation_angle += (x1 * 0.0009);
+	}
+	return (0);
+}
+
+
 void	key_binding(t_mlx *mlx, t_map *map)
 {
+	mlx_mouse_hide();
 	mlx_hook(mlx->win_ptr, 2, 0, &hook_key, map);
 	mlx_hook(mlx->win_ptr, 3, 0, &release_key, map);
 	mlx_hook(mlx->win_ptr, 17, 0, &myclose, map);
+	mlx_hook(mlx->win_ptr, 6, 0, &mousemove, map);
 	mlx_loop_hook(mlx->mlx_ptr, &draw_frame, map);
 }

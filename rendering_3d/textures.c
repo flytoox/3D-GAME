@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:44:35 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/02 22:50:22 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:08:20 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture)
 
 void	open_textures(t_map *map, t_data *texture)
 {
-	texture[0].img = mlx_xpm_file_to_image(map->mlx, map->clrs.ea,
+	texture[0].img = mlx_xpm_file_to_image(map->mlx, map->clrs.we,
 			&texture[0].width, &texture[0].height);
-	texture[1].img = mlx_xpm_file_to_image(map->mlx, map->clrs.we,
+	texture[1].img = mlx_xpm_file_to_image(map->mlx, map->clrs.ea,
 			&texture[1].width, &texture[1].height);
 	texture[2].img = mlx_xpm_file_to_image(map->mlx, map->clrs.no,
 			&texture[2].width, &texture[2].height);

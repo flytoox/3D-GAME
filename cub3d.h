@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/03 12:45:52 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:11:48 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdbool.h>
 # include <limits.h>
 
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 1000
 # define TILE_SIZE 64
 # define PI 3.14159265359
 # define FOV 60
@@ -117,6 +117,7 @@ typedef struct s_map
 	double			fov_angle;
 	t_data			*texture;
 	t_colors		clrs;
+	bool			toogle_mouse;
 	struct s_map	*next;
 }	t_map;
 

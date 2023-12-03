@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 13:15:31 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:31:23 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,7 @@ void	parsing_map(int fd, char *line, t_strp clrs[])
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
 	lmap.height = ft_lstsize(map) * TILE_SIZE;
 	lmap.width = get_length(mp) * TILE_SIZE;
-	set_colors(&lmap, clrs);
-	display_3d_map(tmp, &lmap);
+	return (set_colors(&lmap, clrs), display_3d_map(tmp, &lmap));
 }
 
 void	init_check(int *fd, char **line, char *map, t_strp *mp)
