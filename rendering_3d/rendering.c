@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/11/30 15:45:43 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:42:39 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,54 @@ void	set_player_initial_position(t_map *lmap)
 	}
 }
 
+void	fill_minimap(t_map *lmap)
+{
+	int	i;
+	int	j;
+	int	cnti,cntj;
+
+	i = lmap->player->y / TILE_SIZE - 7;
+	if (i < -1)
+		i = -1;
+	cnti = -1;
+	while (lmap->map[++i] && ++cnti < 14)
+	{
+		j = lmap->player->x / TILE_SIZE - 7;
+		if (j < -1)
+			j = -1;
+		cntj = -1;
+		while (lmap->map[i][++j] && ++cntj < 14)
+		{
+			if ((lmap->map[i][j] == 'N' || lmap->map[i][j] == 'S'
+				|| lmap->map[i][j] == 'E' || lmap->map[i][j] == 'W'))
+			{
+				lmap->minimp.Px = cntj;
+				lmap->minimp.Py = cnti;
+			}
+			lmap->minimp.mp[cnti][cntj]= lmap->map[i][j];
+		}
+		lmap->minimp.mp[cnti][cntj+1] = '\0';
+	}
+	lmap->minimp.height = cnti;
+}
+
 void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 {
 	int				i;
 	int				j;
 	t_draw_params	params;
-
+	
 	i = -1;
 	params.mlx = lmap->mlx;
-	while (lmap->map[++i])
+	fill_minimap(lmap);
+	while (lmap->minimp.mp[++i] && i < lmap->minimp.height)
 	{
 		j = -1;
-		while (lmap->map[i][++j])
+		while (lmap->minimp.mp[i][++j])
 		{
 			params.x = j * TILE_SIZE * MINI_MAP_SCALE_FACTOR;
 			params.y = i * TILE_SIZE * MINI_MAP_SCALE_FACTOR;
-			draw_map_cell(lmap->map[i][j], &params, lmap, img);
+			draw_map_cell(lmap->minimp.mp[i][j], &params, lmap, img);
 		}
 	}
 }
@@ -86,6 +118,7 @@ void	display_3d_map(char **map, t_map *lmap)
 	t_data			texture[4];
 
 	init_mlx_window(&mlx);
+	lmap->minimp.flg = false;
 	init_player(&player, map);
 	params.mlx = &mlx;
 	lmap->player = &player;
