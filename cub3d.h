@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/03 18:11:48 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:43:43 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 # include <stdbool.h>
 # include <limits.h>
 
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 1000
+# define WIN_WIDTH 900
+# define WIN_HEIGHT 600
 # define TILE_SIZE 64
 # define PI 3.14159265359
 # define FOV 60
-# define MINI_MAP_SCALE_FACTOR 0.1
+# define MINI_MAP_SCALE_FACTOR 0.2
 # define WALL_STRIP_WIDTH 1
 # define MIN_DISTANCE_FROM_WALL 20
 
@@ -39,6 +39,16 @@ typedef struct colors
 	char	*we;
 	char	*ea;
 }	t_colors;
+
+typedef struct minimap
+{
+	int		height;
+	int		Px;
+	int		Py;
+	char	mp[20][20];
+	bool	flg;
+}	t_minimap;
+
 typedef struct pair
 {
 	char	*first;
@@ -118,6 +128,7 @@ typedef struct s_map
 	t_data			*texture;
 	t_colors		clrs;
 	bool			toogle_mouse;
+	t_minimap		minimp;
 	struct s_map	*next;
 }	t_map;
 

@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:34:52 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 18:18:21 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:21:46 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	draw_map_cell(char cell, t_draw_params *params,
 		params->color = 0x00FFFFFF;
 		draw_filled_rectangle(params, img);
 	}
-	params->x = lmap->player->x * MINI_MAP_SCALE_FACTOR;
-	params->y = lmap->player->y * MINI_MAP_SCALE_FACTOR;
+	params->x = lmap->minimp.Px * MINI_MAP_SCALE_FACTOR;
+	params->y = lmap->minimp.Py * MINI_MAP_SCALE_FACTOR;
 	params->color = 0x000000FF;
 	params->radius = lmap->player->radius * MINI_MAP_SCALE_FACTOR;
 	draw_filled_circle(params, img);
