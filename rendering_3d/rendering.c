@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 19:42:39 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/04 20:55:01 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,35 +58,42 @@ void	set_player_initial_position(t_map *lmap)
 	}
 }
 
-void	fill_minimap(t_map *lmap)
+void    fill_minimap(t_map *lmap)
 {
-	int	i;
-	int	j;
-	int	cnti,cntj;
+    int    i;
+    int    j;
+    int    cnti,cntj;
 
-	i = lmap->player->y / TILE_SIZE - 7;
-	if (i < -1)
-		i = -1;
-	cnti = -1;
-	while (lmap->map[++i] && ++cnti < 14)
-	{
-		j = lmap->player->x / TILE_SIZE - 7;
-		if (j < -1)
-			j = -1;
-		cntj = -1;
-		while (lmap->map[i][++j] && ++cntj < 14)
-		{
-			if ((lmap->map[i][j] == 'N' || lmap->map[i][j] == 'S'
-				|| lmap->map[i][j] == 'E' || lmap->map[i][j] == 'W'))
-			{
-				lmap->minimp.Px = cntj;
-				lmap->minimp.Py = cnti;
-			}
-			lmap->minimp.mp[cnti][cntj]= lmap->map[i][j];
-		}
-		lmap->minimp.mp[cnti][cntj+1] = '\0';
-	}
-	lmap->minimp.height = cnti;
+    i = lmap->player->y / TILE_SIZE + 7;
+    if (i >= get_map_height(lmap->map))
+        i = get_map_height(lmap->map) - 1;
+    i -= 14;
+    if (i < 0)
+        i = 0;
+    cnti = -1;
+    while (lmap->map[i] && ++cnti < 14)
+    {
+        j = lmap->player->x / TILE_SIZE + 7;
+        if (j >= (int)ft_strlen(lmap->map[i]))
+            j = ft_strlen(lmap->map[i]) - 1;
+        j -= 14;
+        if (j < 0)
+            j = 0;
+        cntj = -1;
+        while (lmap->map[i][j] && ++cntj < 14)
+        {
+            // if ((lmap->map[i][j] == 'N' || lmap->map[i][j] == 'S'
+            //     || lmap->map[i][j] == 'E' || lmap->map[i][j] == 'W'))
+            // {
+            //     lmap->minimp.Px = cntj;
+            //     lmap->minimp.Py = cnti;
+            // }
+            lmap->minimp.mp[cnti][cntj]= lmap->map[i][j++];
+        }
+        lmap->minimp.mp[cnti][cntj+1] = '\0';
+        i++;
+    }
+    lmap->minimp.height = cnti;
 }
 
 void	display_2d_map_on_screen(t_map *lmap, t_data *img)
@@ -119,6 +126,7 @@ void	display_3d_map(char **map, t_map *lmap)
 
 	init_mlx_window(&mlx);
 	lmap->minimp.flg = false;
+	lmap->toogle_mouse = false;
 	init_player(&player, map);
 	params.mlx = &mlx;
 	lmap->player = &player;
