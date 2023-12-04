@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 17:18:40 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:11:31 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,9 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 		render_texture(&ray, map, &img);
 		ray_angle += map->fov_angle / (num_rays);
 	}
-	if (is_2d)
-		cast_2d_rays(map, &ray, &img);
+	// if (is_2d)
+	// 	cast_2d_rays(map, &ray, &img);
+	(void)is_2d;
 	mlx_put_image_to_window(map->mlx->mlx_ptr, map->mlx->win_ptr,
 		img.img, 0, 0);
 	mlx_destroy_image(map->mlx->mlx_ptr, img.img);

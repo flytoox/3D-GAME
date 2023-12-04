@@ -3,15 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 19:15:18 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:07:44 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <stdbool.h>
+
+bool	is_itclosed(char **map, int n, int x, int y)
+{
+	if (x < 0 || y < 0 || x >= (int)ft_strlen(map[y]) || y >= n)
+		return (false);
+	if (map[y][x] == '1' || map[y][x] == 'x')
+		return (true);
+	if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
+		|| map[y][x] == 'E' || map[y][x] == 'W')
+	{
+		map[y][x] = 'x';
+		if (is_itclosed(map, n, x + 1, y)
+			&& is_itclosed(map, n, x - 1, y)
+			&& is_itclosed(map, n, x, y + 1)
+			&& is_itclosed(map, n, x, y - 1))
+			return (true);
+	}
+	return (false);
+}
 
 bool	check_closed(char **map, int n)
 {
@@ -21,7 +40,7 @@ bool	check_closed(char **map, int n)
 	if (!map)
 		return (false);
 	y = 0;
-	map = copy_map(map);
+	printf("\n\n");
 	while (map[y])
 	{
 		x = 0;
@@ -67,6 +86,7 @@ void	parsing_map(int fd, char *line, t_strp clrs[])
 {
 	t_lst	*map;
 	char	**mp;
+	char	**tmp;
 	t_map	lmap;
 
 	map = NULL;
@@ -83,13 +103,14 @@ void	parsing_map(int fd, char *line, t_strp clrs[])
 	if (line)
 		return (ft_putstr_fd("Error\nMap should be the last;)\n", 2), exit(1));
 	mp = lst_tochar(map);
+	tmp = copy_map(mp);
 	if (unkown_char(mp) || !there_is_player(mp))
 		return (ft_putstr_fd("Player error\n", 2), exit(1));
 	if (!check_closed(lst_tochar(map), ft_lstsize(map)))
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
 	lmap.height = ft_lstsize(map) * TILE_SIZE;
 	lmap.width = get_length(mp) * TILE_SIZE;
-	return (set_colors(&lmap, clrs), display_3d_map(mp, &lmap));
+	return (set_colors(&lmap, clrs), display_3d_map(tmp, &lmap));
 }
 
 void	init_check(int *fd, char **line, char *map, t_strp *mp)

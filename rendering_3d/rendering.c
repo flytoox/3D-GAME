@@ -6,7 +6,7 @@
 /*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 20:55:01 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:05:00 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	display_3d_map(char **map, t_map *lmap)
 	t_data			texture[4];
 
 	init_mlx_window(&mlx);
-	lmap->minimp.flg = false;
 	lmap->toogle_mouse = false;
 	init_player(&player, map);
 	params.mlx = &mlx;

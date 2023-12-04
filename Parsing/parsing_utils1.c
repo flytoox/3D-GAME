@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:46:49 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 19:14:50 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:08:20 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,6 @@ bool	unkown_char(char **mp)
 			if (!ft_strchr("NSEW01 ", mp[j][i]))
 				return (printf("Don't enter something sus on the map pls\n"),
 					exit(1), true);
-	}
-	return (false);
-}
-
-bool	is_itclosed(char **map, int n, int x, int y)
-{
-	if (x < 0 || y < 0 || x >= (int)ft_strlen(map[y]) || y >= n)
-		return (false);
-	if (map[y][x] == '1' || map[y][x] == 'x')
-		return (true);
-	if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
-		|| map[y][x] == 'E' || map[y][x] == 'W')
-	{
-		map[y][x] = 'x';
-		if (is_itclosed(map, n, x + 1, y)
-			&& is_itclosed(map, n, x - 1, y)
-			&& is_itclosed(map, n, x, y + 1)
-			&& is_itclosed(map, n, x, y - 1))
-			return (true);
 	}
 	return (false);
 }

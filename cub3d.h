@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/03 19:15:14 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:09:29 by aait-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define TILE_SIZE 64
 # define PI 3.14159265359
 # define FOV 60
-# define MINI_MAP_SCALE_FACTOR 0.2
+# define MINI_MAP_SCALE_FACTOR 0.5
 # define WALL_STRIP_WIDTH 1
 # define MIN_DISTANCE_FROM_WALL 20
 
@@ -46,7 +46,6 @@ typedef struct minimap
 	int		Px;
 	int		Py;
 	char	mp[20][20];
-	bool	flg;
 }	t_minimap;
 
 typedef struct pair
@@ -177,6 +176,9 @@ int		get_length(char **map);
 int		get_map_height(char **map);
 int		there_is_player(char **map);
 
+void	fill_colors(int arr[], char **s);
+bool	unkown_char(char **mp);
+
 void	draw_filled_rectangle(t_draw_params *params, t_data *img);
 void	draw_filled_circle(t_draw_params *params, t_data *img);
 void	draw_map_cell(char cell, t_draw_params *params,
@@ -224,9 +226,5 @@ void	open_textures(t_map *map, t_data *texture);
 void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture);
 void	render_texture(t_ray *ray, t_map *map, t_data *img);
 void	destroy_textures(void *mlx, t_data *texture);
-
-void	fill_colors(int arr[], char **s);
-bool	unkown_char(char **mp);
-bool	is_itclosed(char **map, int n, int x, int y);
 
 #endif
