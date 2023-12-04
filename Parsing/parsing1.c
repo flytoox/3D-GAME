@@ -3,34 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 18:31:23 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:15:18 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <stdbool.h>
-
-bool	is_itclosed(char **map, int n, int x, int y)
-{
-	if (x < 0 || y < 0 || x >= (int)ft_strlen(map[y]) || y >= n)
-		return (false);
-	if (map[y][x] == '1' || map[y][x] == 'x')
-		return (true);
-	if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
-		|| map[y][x] == 'E' || map[y][x] == 'W')
-	{
-		map[y][x] = 'x';
-		if (is_itclosed(map, n, x + 1, y)
-			&& is_itclosed(map, n, x - 1, y)
-			&& is_itclosed(map, n, x, y + 1)
-			&& is_itclosed(map, n, x, y - 1))
-			return (true);
-	}
-	return (false);
-}
 
 bool	check_closed(char **map, int n)
 {
@@ -40,33 +21,19 @@ bool	check_closed(char **map, int n)
 	if (!map)
 		return (false);
 	y = 0;
-	print_map(map);
-	printf("\n\n");
+	map = copy_map(map);
 	while (map[y])
 	{
 		x = 0;
 		while (map[y][x])
 		{
 			if ((ft_strchr("0NSWE", map[y][x])) && !is_itclosed(map, n, x, y))
-				return (print_map(map), 0);
+				return (0);
 			x++;
 		}
 		y++;
 	}
 	return (1);
-}
-
-void	fill_colors(int arr[], char **s)
-{
-	arr[0] = ft_atoi(s[0]);
-	if (arr[0] == -1)
-		return (printf("The colors should be between 0 and 255"), exit(1));
-	arr[1] = ft_atoi(s[1]);
-	if (arr[1] == -1)
-		return (printf("The colors should be between 0 and 255"), exit(1));
-	arr[2] = ft_atoi(s[2]);
-	if (arr[2] == -1)
-		return (printf("The colors should be between 0 and 255"), exit(1));
 }
 
 void	set_colors(t_map *lmap, t_strp clrs[])
@@ -96,29 +63,10 @@ void	set_colors(t_map *lmap, t_strp clrs[])
 	lmap->clrs.ea = clrs[3].second;
 }
 
-bool	unkown_char(char **mp)
-{
-	int	i;
-	int	j;
-
-	j = -1;
-	while (mp[++j])
-	{
-		i = -1;
-		printf("|%s|\n", mp[j]);
-		while (mp[j][++i])
-			if (!ft_strchr("NSEW01 ", mp[j][i]))
-				return (printf("Don't enter something sus on the map pls\n"),
-					exit(1), true);
-	}
-	return (false);
-}
-
 void	parsing_map(int fd, char *line, t_strp clrs[])
 {
 	t_lst	*map;
 	char	**mp;
-	char	**tmp;
 	t_map	lmap;
 
 	map = NULL;
@@ -135,14 +83,13 @@ void	parsing_map(int fd, char *line, t_strp clrs[])
 	if (line)
 		return (ft_putstr_fd("Error\nMap should be the last;)\n", 2), exit(1));
 	mp = lst_tochar(map);
-	tmp = copy_map(mp);
 	if (unkown_char(mp) || !there_is_player(mp))
 		return (ft_putstr_fd("Player error\n", 2), exit(1));
 	if (!check_closed(lst_tochar(map), ft_lstsize(map)))
 		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
 	lmap.height = ft_lstsize(map) * TILE_SIZE;
 	lmap.width = get_length(mp) * TILE_SIZE;
-	return (set_colors(&lmap, clrs), display_3d_map(tmp, &lmap));
+	return (set_colors(&lmap, clrs), display_3d_map(mp, &lmap));
 }
 
 void	init_check(int *fd, char **line, char *map, t_strp *mp)
