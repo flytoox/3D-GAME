@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/04 21:09:29 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 21:35:38 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 # include <stdbool.h>
 # include <limits.h>
 
-# define WIN_WIDTH 900
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1280
+# define WIN_HEIGHT 720
 # define TILE_SIZE 64
 # define PI 3.14159265359
 # define FOV 60
-# define MINI_MAP_SCALE_FACTOR 0.5
+# define MINI_MAP_SCALE_FACTOR 0.2
 # define WALL_STRIP_WIDTH 1
 # define MIN_DISTANCE_FROM_WALL 20
 
@@ -125,6 +125,8 @@ typedef struct s_map
 	int				side_movement;
 	double			fov_angle;
 	t_data			*texture;
+	int				animation_index;
+	t_data			animation[10];
 	t_colors		clrs;
 	bool			toogle_mouse;
 	t_minimap		minimp;
@@ -225,6 +227,6 @@ int		get_pixel_color(t_data *data, int x, int y);
 void	open_textures(t_map *map, t_data *texture);
 void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture);
 void	render_texture(t_ray *ray, t_map *map, t_data *img);
-void	destroy_textures(void *mlx, t_data *texture);
+void	destroy_textures(void *mlx, t_data *texture, int sz);
 
 #endif

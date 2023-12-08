@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:10:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 19:39:25 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:30:18 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	cast_2d_rays(t_map *map, t_ray *ray, t_data *img)
 	fov_angle = FOV * (PI / 180);
 	ray_angle = map->player->rotation_angle - (fov_angle / 2);
 	display_2d_map_on_screen(map, img);
+	return ;
 	while (++i < num_rays)
 	{
 		initialise_ray(ray, ray_angle);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 21:11:31 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:56:00 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ void	render_ray_3d(t_ray *ray, t_map *map, t_data *img, t_data *texture)
 
 	ray_distance = ray->distance
 		* cos(ray->ray_angle - map->player->rotation_angle);
-	distance_projection_plane = (WIN_WIDTH / 2) / tan(map->fov_angle / 2);
+	distance_projection_plane = ((double)WIN_WIDTH / 2) / tan(map->fov_angle / 2);
 	wall_strip_height = (TILE_SIZE / ray_distance) * distance_projection_plane;
 	params.mlx = map->mlx;
 	params.x = ray->ray_index * WALL_STRIP_WIDTH;
-	params.y = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
+	params.y = ((double)WIN_HEIGHT / 2) - (wall_strip_height / 2);
 	params.width = WALL_STRIP_WIDTH;
 	params.height = wall_strip_height;
 	params.color = create_rgb(255, 0, 0, 0);
@@ -105,9 +105,8 @@ void	cast_all_rays(t_map *map, double num_rays, int is_2d)
 		render_texture(&ray, map, &img);
 		ray_angle += map->fov_angle / (num_rays);
 	}
-	// if (is_2d)
-	// 	cast_2d_rays(map, &ray, &img);
-	(void)is_2d;
+	if (is_2d)
+		cast_2d_rays(map, &ray, &img);
 	mlx_put_image_to_window(map->mlx->mlx_ptr, map->mlx->win_ptr,
 		img.img, 0, 0);
 	mlx_destroy_image(map->mlx->mlx_ptr, img.img);

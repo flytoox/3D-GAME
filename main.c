@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:46:33 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/04 21:04:28 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 21:38:07 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdlib.h>
+
 int	main(int argc, char **argv)
 {
 	if (argc != 2)

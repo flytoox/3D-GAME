@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 21:05:00 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 21:36:03 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	set_player_initial_position(t_map *lmap)
 			if (lmap->map[i][j] == 'N' || lmap->map[i][j] == 'S'
 				|| lmap->map[i][j] == 'E' || lmap->map[i][j] == 'W')
 			{
-				lmap->player->x = j * TILE_SIZE + TILE_SIZE / 2;
-				lmap->player->y = i * TILE_SIZE + TILE_SIZE / 2;
+				lmap->player->x = j * TILE_SIZE + (double)TILE_SIZE / 2;
+				lmap->player->y = i * TILE_SIZE + (double)TILE_SIZE / 2;
 				return ;
 			}
 		}
@@ -70,8 +70,8 @@ void    fill_minimap(t_map *lmap)
     i -= 14;
     if (i < 0)
         i = 0;
-    cnti = -1;
-    while (lmap->map[i] && ++cnti < 14)
+    cnti = 0;
+    while (lmap->map[i] && cnti < 15)
     {
         j = lmap->player->x / TILE_SIZE + 7;
         if (j >= (int)ft_strlen(lmap->map[i]))
@@ -79,8 +79,8 @@ void    fill_minimap(t_map *lmap)
         j -= 14;
         if (j < 0)
             j = 0;
-        cntj = -1;
-        while (lmap->map[i][j] && ++cntj < 14)
+        cntj = 0;
+        while (lmap->map[i][j] && cntj < 14)
         {
             // if ((lmap->map[i][j] == 'N' || lmap->map[i][j] == 'S'
             //     || lmap->map[i][j] == 'E' || lmap->map[i][j] == 'W'))
@@ -88,9 +88,9 @@ void    fill_minimap(t_map *lmap)
             //     lmap->minimp.Px = cntj;
             //     lmap->minimp.Py = cnti;
             // }
-            lmap->minimp.mp[cnti][cntj]= lmap->map[i][j++];
+            lmap->minimp.mp[cnti][cntj++]= lmap->map[i][j++];
         }
-        lmap->minimp.mp[cnti][cntj+1] = '\0';
+        lmap->minimp.mp[cnti++][cntj] = '\0';
         i++;
     }
     lmap->minimp.height = cnti;
@@ -117,6 +117,29 @@ void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 	}
 }
 
+void	check_xpm(t_data *animation, char *pth, t_map *lmap)
+{
+	animation->img = mlx_xpm_file_to_image(lmap->mlx->mlx_ptr,
+			pth, &animation->width, &animation->height);
+	if (!animation->img)
+		return (printf("Error on opening animation files\n"), exit(1));
+}
+
+void	open_animation(t_map *lmap)
+{
+	lmap->animation_index = 0;
+	check_xpm(&lmap->animation[0],"./textures/animation/01.xpm" , lmap);
+	check_xpm(&lmap->animation[1],"./textures/animation/02.xpm" , lmap);
+	check_xpm(&lmap->animation[2],"./textures/animation/03.xpm" , lmap);
+	check_xpm(&lmap->animation[3],"./textures/animation/04.xpm" , lmap);
+	check_xpm(&lmap->animation[4],"./textures/animation/02.xpm" , lmap);
+	check_xpm(&lmap->animation[5],"./textures/animation/F01.xpm" , lmap);
+	check_xpm(&lmap->animation[6],"./textures/animation/F02.xpm" , lmap);
+	check_xpm(&lmap->animation[7],"./textures/animation/F03.xpm" , lmap);
+	check_xpm(&lmap->animation[8],"./textures/animation/F04.xpm" , lmap);
+	check_xpm(&lmap->animation[9],"./textures/animation/F05.xpm" , lmap);
+}
+
 void	display_3d_map(char **map, t_map *lmap)
 {
 	t_mlx			mlx;
@@ -132,10 +155,12 @@ void	display_3d_map(char **map, t_map *lmap)
 	lmap->mlx = &mlx;
 	lmap->map = map;
 	set_player_initial_position(lmap);
+	open_animation(lmap);
 	open_textures(lmap, texture);
 	lmap->texture = texture;
-	cast_all_rays(lmap, WIN_WIDTH / WALL_STRIP_WIDTH, 1);
+	cast_all_rays(lmap, (double)WIN_WIDTH / WALL_STRIP_WIDTH, 1);
 	key_binding(&mlx, lmap);
 	mlx_loop(mlx.mlx_ptr);
-	destroy_textures(lmap->mlx->mlx_ptr, lmap->texture);
+	destroy_textures(lmap->mlx->mlx_ptr, lmap->texture, 4);
+	destroy_textures(lmap->mlx->mlx_ptr, lmap->animation, 10);
 }

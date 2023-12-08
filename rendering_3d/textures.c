@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:44:35 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 18:08:20 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 21:35:49 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void	open_textures(t_map *map, t_data *texture)
 			&texture[3].endian);
 }
 
-void	destroy_textures(void *mlx, t_data *texture)
+void	destroy_textures(void *mlx, t_data *texture, int sz)
 {
 	int	i;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < sz)
 		mlx_destroy_image(mlx, texture[i].img);
 }
 

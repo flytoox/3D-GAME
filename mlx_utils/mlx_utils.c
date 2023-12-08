@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 18:15:35 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/08 21:33:53 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,28 @@ int	release_key(int keycode, t_map *map)
 
 int	draw_frame(t_map *map)
 {
+	static int	i;
+
 	update_player_movements(map, map->player->side_movement);
 	mlx_clear_window(map->mlx->mlx_ptr, map->mlx->win_ptr);
-	cast_all_rays(map, WIN_WIDTH / WALL_STRIP_WIDTH, 1);
+	cast_all_rays(map, (double)WIN_WIDTH / WALL_STRIP_WIDTH, 1);
+	mlx_put_image_to_window(map->mlx->mlx_ptr,
+		map->mlx->win_ptr, map->animation[map->animation_index].img, 0, 0);
+	if (!i)
+	{
+		if (map->animation_index < 5)
+			map->animation_index = (map->animation_index + 1) % 5;
+		else
+			map->animation_index = (map->animation_index + 1) % 10;
+	}
+	i = (i + 1) % 7;
 	return (0);
 }
 
 int mousemove(int x, int y, t_map *map)
 {
 	(void)y;
-	double x1 = WIN_WIDTH / 2;
+	double x1 = (double)WIN_WIDTH / 2;
 	if (!map->toogle_mouse)
 	{
 		mlx_mouse_move(map->mlx->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2);
@@ -82,6 +94,14 @@ int mousemove(int x, int y, t_map *map)
 	return (0);
 }
 
+int	mouse_click(int button, int x, int y, t_map *map)
+{
+	(void)x;
+	(void)y;
+	if (button == 1)
+		map->animation_index = 5;
+	return (0);
+}
 
 void	key_binding(t_mlx *mlx, t_map *map)
 {
@@ -91,4 +111,5 @@ void	key_binding(t_mlx *mlx, t_map *map)
 	mlx_hook(mlx->win_ptr, 17, 0, &myclose, map);
 	mlx_hook(mlx->win_ptr, 6, 0, &mousemove, map);
 	mlx_loop_hook(mlx->mlx_ptr, &draw_frame, map);
+	mlx_mouse_hook(mlx->win_ptr, &mouse_click, map);
 }
