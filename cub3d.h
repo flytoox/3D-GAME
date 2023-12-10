@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/08 21:35:38 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:28:43 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ typedef struct colors
 	char	*we;
 	char	*ea;
 }	t_colors;
-
-typedef struct minimap
-{
-	int		height;
-	int		Px;
-	int		Py;
-	char	mp[20][20];
-}	t_minimap;
 
 typedef struct pair
 {
@@ -129,7 +121,6 @@ typedef struct s_map
 	t_data			animation[10];
 	t_colors		clrs;
 	bool			toogle_mouse;
-	t_minimap		minimp;
 	struct s_map	*next;
 }	t_map;
 
@@ -177,19 +168,16 @@ char	**copy_map(char **map);
 int		get_length(char **map);
 int		get_map_height(char **map);
 int		there_is_player(char **map);
+bool	is_itclosed(char **map, int n, int x, int y);
 
 void	fill_colors(int arr[], char **s);
 bool	unkown_char(char **mp);
 
-void	draw_filled_rectangle(t_draw_params *params, t_data *img);
 void	draw_filled_circle(t_draw_params *params, t_data *img);
-void	draw_map_cell(char cell, t_draw_params *params,
-			t_map *lmap, t_data *img);
 void	draw_line(t_draw_params *params, int end_x, int end_y, t_data *img);
 
 void	init_player(t_player *player, char **map);
 int		is_there_wall_at(double x, double y, t_map *lmap);
-void	reinit_player(t_player *player);
 void	set_coordinates(double *new_x, double *new_y,
 			t_map *lmap, int side_movement);
 int		wall_collision(double x, double y, t_map *lmap);
@@ -229,4 +217,9 @@ void	print_texture_from_image(t_ray *ray, t_data *img, t_data *texture);
 void	render_texture(t_ray *ray, t_map *map, t_data *img);
 void	destroy_textures(void *mlx, t_data *texture, int sz);
 
+void	draw_player_minimap(t_map *lmap, t_data *img);
+void	set_player_initial_position(t_map *lmap);
+
+int		mouse_click(int button, int x, int y, t_map *map);
+int		mousemove(int x, int y, t_map *map);
 #endif

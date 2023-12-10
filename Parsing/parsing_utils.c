@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:26:12 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 19:13:32 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:12:40 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_length(char **map)
 			max = j;
 		i++;
 	}
-	return (max);
+	return (free(map), max);
 }
 
 int	there_is_player(char **map)
@@ -56,7 +56,7 @@ int	there_is_player(char **map)
 		}
 		i++;
 	}
-	return (player == 1);
+	return (free(map), player == 1);
 }
 
 int	get_map_height(char **map)
@@ -86,7 +86,7 @@ char	**copy_map(char **map)
 		i++;
 	}
 	ret[i] = 0;
-	return (ret);
+	return (free(map), ret);
 }
 
 void	fill_colors(int arr[], char **s)

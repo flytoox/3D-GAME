@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/08 21:33:53 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:23:42 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,28 +78,6 @@ int	draw_frame(t_map *map)
 			map->animation_index = (map->animation_index + 1) % 10;
 	}
 	i = (i + 1) % 7;
-	return (0);
-}
-
-int mousemove(int x, int y, t_map *map)
-{
-	(void)y;
-	double x1 = (double)WIN_WIDTH / 2;
-	if (!map->toogle_mouse)
-	{
-		mlx_mouse_move(map->mlx->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2);
-		x1 = x - x1;
-		map->player->rotation_angle += (x1 * 0.0009);
-	}
-	return (0);
-}
-
-int	mouse_click(int button, int x, int y, t_map *map)
-{
-	(void)x;
-	(void)y;
-	if (button == 1)
-		map->animation_index = 5;
 	return (0);
 }
 

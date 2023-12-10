@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:00:14 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/08 19:56:00 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:01:15 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	render_ray_3d(t_ray *ray, t_map *map, t_data *img, t_data *texture)
 
 	ray_distance = ray->distance
 		* cos(ray->ray_angle - map->player->rotation_angle);
-	distance_projection_plane = ((double)WIN_WIDTH / 2) / tan(map->fov_angle / 2);
+	distance_projection_plane = (double)WIN_WIDTH / 2 / tan(map->fov_angle / 2);
 	wall_strip_height = (TILE_SIZE / ray_distance) * distance_projection_plane;
 	params.mlx = map->mlx;
 	params.x = ray->ray_index * WALL_STRIP_WIDTH;

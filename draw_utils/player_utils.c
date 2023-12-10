@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 12:33:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/03 19:12:21 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:28:41 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,6 @@ void	init_player(t_player *player, char **map)
 	player->rotation_angle = get_player_rotation_angle(map);
 	player->move_speed = 3;
 	player->rotation_speed = 2 * (PI / 180);
-}
-
-void	reinit_player(t_player *player)
-{
-	player->walk_direction = 0;
-	player->turn_direction = 0;
 }
 
 int	is_there_wall_at(double x, double y, t_map *lmap)
