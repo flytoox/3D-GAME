@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 15:44:57 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/10 12:59:11 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:03:47 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	draw_player_minimap(t_map *lmap, t_data *img)
 	params.mlx = lmap->mlx;
 	params.radius = lmap->player->radius * MINI_MAP_SCALE_FACTOR;
 	draw_filled_circle(&params, img);
-	draw_line(&params, params.x + cos(lmap->player->rotation_angle) * 4,
-		params.y + sin(lmap->player->rotation_angle) * 4, img);
+	draw_line(&params, params.x + cos(lmap->player->rotation_angle) * 7,
+		params.y + sin(lmap->player->rotation_angle) * 7, img);
 }
 
 int	is_collision_on_line(double x1, double y1, t_map *lmap, int steps)
@@ -102,11 +102,11 @@ void	keep_player_far_from_wall(double *check_x, double *check_y,
 		t_map *lmap)
 {
 	if (*check_x > lmap->player->x)
-		*check_x += 5;
+		*check_x += 11;
 	else if (*check_x < lmap->player->x)
-		*check_x -= 5;
+		*check_x -= 11;
 	if (*check_y > lmap->player->y)
-		*check_y += 5;
+		*check_y += 11;
 	else if (*check_y < lmap->player->y)
-		*check_y -= 5;
+		*check_y -= 11;
 }

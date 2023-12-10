@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/10 13:28:43 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:48:35 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ char	**copy_map(char **map);
 int		get_length(char **map);
 int		get_map_height(char **map);
 int		there_is_player(char **map);
+bool	check_closed(char **map, int n);
 bool	is_itclosed(char **map, int n, int x, int y);
 
 void	fill_colors(int arr[], char **s);
@@ -197,7 +198,6 @@ double	normalize_angle(double angle);
 double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
 void	check_vertical_intersect(t_ray *ray, t_map *map);
-void	cast_2d_rays(t_map *map, t_ray *ray, t_data *img);
 void	init_ray_data(double *fov_angle,
 			double *ray_angle, t_data *img, t_map *map);
 void	draw_ceiling_and_floor(t_map *lmap, t_data *img);
@@ -222,4 +222,6 @@ void	set_player_initial_position(t_map *lmap);
 
 int		mouse_click(int button, int x, int y, t_map *map);
 int		mousemove(int x, int y, t_map *map);
+
+void generate_map(void);
 #endif
