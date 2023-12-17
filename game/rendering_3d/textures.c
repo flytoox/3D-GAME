@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:44:35 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/08 21:35:49 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:46:06 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,19 @@ void	open_textures(t_map *map, t_data *texture)
 			&texture[3].width, &texture[3].height);
 	if (!texture[0].img || !texture[1].img
 		|| !texture[2].img || !texture[3].img)
-		return (printf("Error on opening textures\n"), exit(1));
+		return (ERR("Error\nOn opening textures\n", 2), exit(1));
 	texture[0].addr = mlx_get_data_addr(texture[0].img,
-			&texture[0].bits_per_pixel, &texture[0].line_length,
-			&texture[0].endian);
+			&texture[0].bits_per_pixel,
+			&texture[0].line_length, &texture[0].endian);
 	texture[1].addr = mlx_get_data_addr(texture[1].img,
-			&texture[1].bits_per_pixel, &texture[1].line_length,
-			&texture[1].endian);
+			&texture[1].bits_per_pixel,
+			&texture[1].line_length, &texture[1].endian);
 	texture[2].addr = mlx_get_data_addr(texture[2].img,
-			&texture[2].bits_per_pixel, &texture[2].line_length,
-			&texture[2].endian);
+			&texture[2].bits_per_pixel,
+			&texture[2].line_length, &texture[2].endian);
 	texture[3].addr = mlx_get_data_addr(texture[3].img,
-			&texture[3].bits_per_pixel, &texture[3].line_length,
-			&texture[3].endian);
+			&texture[3].bits_per_pixel,
+			&texture[3].line_length, &texture[3].endian);
 }
 
 void	destroy_textures(void *mlx, t_data *texture, int sz)

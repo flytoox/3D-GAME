@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 22:15:19 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/01 20:09:06 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:08:47 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ bool	good_element(char **tmp, t_strp mp[7])
 	while (tmp[i])
 		i++;
 	if (i > 2)
-		return (ft_putstr_fd("Error\nToo many arguments\n", 2), 1);
+		return (ERR("Error\nToo many arguments\n", 2), exit(1), 0);
 	i = -1;
 	while (++i < 6)
 	{
 		if (!ft_strcmp(tmp[0], mp[i].first))
 		{
 			if (mp[i].second)
-				return (ft_putstr_fd("Error\nElement already set\n", 2), 0);
+				return (ERR("Error\nElement already set\n", 2), exit(1), 0);
 			return (mp[i].second = tmp[1], 1);
 		}
 	}
@@ -88,6 +88,8 @@ char	**lst_tochar(t_lst *map)
 	if (!map)
 		return (NULL);
 	ret = malloc(sizeof(char *) * (ft_lstsize(map) + 1));
+	if (!ret)
+		return (exit(1), NULL);
 	i = 0;
 	while (map)
 	{

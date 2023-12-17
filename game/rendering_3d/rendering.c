@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:52:46 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/10 15:58:21 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:26:39 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 		j = lmap->player->x - (75 * 3);
 		while (++cntj < 150)
 		{
-			if (i < 0 || i / TILE_SIZE >= get_map_height(lmap->map)
-				|| j < 0
+			if (i < 0 || i / TILE_SIZE >= get_map_height(lmap->map) || j < 0
 				|| j / TILE_SIZE >= (int)ft_strlen(lmap->map[i / TILE_SIZE])
 				|| lmap->map[i / TILE_SIZE][j / TILE_SIZE] == '1')
 				my_mlx_pixel_put(img, cntj, cnti, 0x000000);
@@ -43,25 +42,25 @@ void	display_2d_map_on_screen(t_map *lmap, t_data *img)
 
 void	check_xpm(t_data *animation, char *pth, t_map *lmap)
 {
-	animation->img = mlx_xpm_file_to_image(lmap->mlx->mlx_ptr,
-			pth, &animation->width, &animation->height);
+	animation->img = mlx_xpm_file_to_image(lmap->mlx->mlx_ptr, pth,
+			&animation->width, &animation->height);
 	if (!animation->img)
-		return (printf("Error on opening animation files\n"), exit(1));
+		return (ERR("Error\nOn opening animation files\n", 2), exit(1));
 }
 
 void	open_animation(t_map *lmap)
 {
 	lmap->animation_index = 0;
-	check_xpm(&lmap->animation[0], "./textures/animation/01.xpm", lmap);
-	check_xpm(&lmap->animation[1], "./textures/animation/02.xpm", lmap);
-	check_xpm(&lmap->animation[2], "./textures/animation/03.xpm", lmap);
-	check_xpm(&lmap->animation[3], "./textures/animation/04.xpm", lmap);
-	check_xpm(&lmap->animation[4], "./textures/animation/02.xpm", lmap);
-	check_xpm(&lmap->animation[5], "./textures/animation/F01.xpm", lmap);
-	check_xpm(&lmap->animation[6], "./textures/animation/F02.xpm", lmap);
-	check_xpm(&lmap->animation[7], "./textures/animation/F03.xpm", lmap);
-	check_xpm(&lmap->animation[8], "./textures/animation/F04.xpm", lmap);
-	check_xpm(&lmap->animation[9], "./textures/animation/F05.xpm", lmap);
+	check_xpm(&lmap->animation[0], "./game/textures/animation/01.xpm", lmap);
+	check_xpm(&lmap->animation[1], "./game/textures/animation/02.xpm", lmap);
+	check_xpm(&lmap->animation[2], "./game/textures/animation/03.xpm", lmap);
+	check_xpm(&lmap->animation[3], "./game/textures/animation/04.xpm", lmap);
+	check_xpm(&lmap->animation[4], "./game/textures/animation/02.xpm", lmap);
+	check_xpm(&lmap->animation[5], "./game/textures/animation/F01.xpm", lmap);
+	check_xpm(&lmap->animation[6], "./game/textures/animation/F02.xpm", lmap);
+	check_xpm(&lmap->animation[7], "./game/textures/animation/F03.xpm", lmap);
+	check_xpm(&lmap->animation[8], "./game/textures/animation/F04.xpm", lmap);
+	check_xpm(&lmap->animation[9], "./game/textures/animation/F05.xpm", lmap);
 }
 
 void	display_3d_map(char **map, t_map *lmap)

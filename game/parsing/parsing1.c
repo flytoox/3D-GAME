@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:10:20 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/10 16:32:32 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:20:02 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 bool	check_closed(char **map, int n)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	if (!map)
 		return (false);
@@ -45,7 +45,7 @@ void	set_colors(t_map *lmap, t_strp clrs[])
 	while (ret[++i])
 		;
 	if (i != 3)
-		return (printf("There is an error on the floor\n"), exit(1));
+		return (ERR("Error\nCheck the floor\n", 2), exit(1));
 	fill_colors(lmap->clrs.flr, ret);
 	free_tab(ret);
 	ret = ft_split(clrs[5].second, ',');
@@ -53,7 +53,7 @@ void	set_colors(t_map *lmap, t_strp clrs[])
 	while (ret[++i])
 		;
 	if (i != 3)
-		return (printf("There is an error on the ceiling\n"), exit(1));
+		return (ERR("Error\nCheck the ceiling\n", 2), exit(1));
 	fill_colors(lmap->clrs.ceilng, ret);
 	free_tab(ret);
 	lmap->clrs.no = clrs[0].second;
@@ -80,15 +80,15 @@ void	parsing_map(int fd, char *line, t_strp clrs[])
 		line = get_next_line(fd);
 	}
 	if (line)
-		return (ft_putstr_fd("Error\nMap should be the last;)\n", 2), exit(1));
+		return (ERR("Error\nMap should be the last;)\n", 2), exit(1));
 	tmp = copy_map(lst_tochar(map));
 	if (unkown_char(lst_tochar(map)) || !there_is_player(lst_tochar(map)))
-		return (ft_putstr_fd("Player error\n", 2), exit(1));
+		return (ERR("Player error\n", 2), exit(1));
 	if (!check_closed(lst_tochar(map), ft_lstsize(map)))
-		return (ft_putstr_fd("Error\nMap not closed\n", 2), exit(1));
+		return (ERR("Error\nMap not closed\n", 2), exit(1));
 	lmap.height = ft_lstsize(map) * TILE_SIZE;
 	lmap.width = get_length(lst_tochar(map)) * TILE_SIZE;
-	return (set_colors(&lmap, clrs), display_3d_map(tmp, &lmap));
+	return (set_colors(&lmap, clrs), display_3d_map(tmp, &lmap), exit(1));
 }
 
 void	init_check(int *fd, char **line, char *map, t_strp *mp)
@@ -116,12 +116,12 @@ int	check_map(char *map)
 		free(line);
 		line = get_next_line(fd);
 		if (!good_element(tmp, mp))
-			return (ft_putstr_fd("Error\nWrong element\n", 2), 1);
+			return (ERR("Error\nWrong element\n", 2), exit(1), 1);
 		free(tmp[0]);
 		free(tmp);
 	}
 	if (!line)
-		return (ft_putstr_fd("Error\nNo map\n", 2), 1);
+		return (ERR("Error\nNo map\n", 2), exit(1), 1);
 	if (check_map_last(mp))
 		return (exit(1), 1);
 	return (parsing_map(fd, line, mp), 0);

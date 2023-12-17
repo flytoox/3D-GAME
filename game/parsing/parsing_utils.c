@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:26:12 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/10 13:12:40 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:54:12 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	there_is_player(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'S'
-				|| map[i][j] == 'E' || map[i][j] == 'W')
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
+				|| map[i][j] == 'W')
 				player++;
 			j++;
 		}
@@ -80,6 +80,8 @@ char	**copy_map(char **map)
 		return (NULL);
 	i = 0;
 	ret = malloc(sizeof(char *) * (get_map_height(map) + 1));
+	if (!ret)
+		return (exit(1), NULL);
 	while (map[i])
 	{
 		ret[i] = ft_strdup(map[i]);
@@ -93,11 +95,14 @@ void	fill_colors(int arr[], char **s)
 {
 	arr[0] = ft_atoi(s[0]);
 	if (arr[0] == -1)
-		return (printf("The colors should be between 0 and 255"), exit(1));
+		return (ERR("Error\nThe colors should be between 0 and 255", 2),
+			exit(1));
 	arr[1] = ft_atoi(s[1]);
 	if (arr[1] == -1)
-		return (printf("The colors should be between 0 and 255"), exit(1));
+		return (ERR("Error\nThe colors should be between 0 and 255", 2),
+			exit(1));
 	arr[2] = ft_atoi(s[2]);
 	if (arr[2] == -1)
-		return (printf("The colors should be between 0 and 255"), exit(1));
+		return (ERR("Error\nThe colors should be between 0 and 255", 2),
+			exit(1));
 }

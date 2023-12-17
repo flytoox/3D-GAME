@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:10:58 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/10 16:02:13 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:47:40 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	draw_ceiling_and_floor(t_map *lmap, t_data *img)
 		params.height = WIN_HEIGHT / 2;
 		params.color = create_rgb(lmap->clrs.ceilng[0], lmap->clrs.ceilng[1],
 				lmap->clrs.ceilng[2], 0);
-		draw_line(&params, params.x + 0, params.y + params.height, img);
+		draw_line(&params, params.x, params.y + params.height, img);
 		params.y = WIN_HEIGHT / 2;
 		params.color = create_rgb(lmap->clrs.flr[0], lmap->clrs.flr[1],
 				lmap->clrs.flr[2], 0);
-		draw_line(&params, params.x + 0, params.y + params.height, img);
+		draw_line(&params, params.x, params.y + params.height, img);
 	}
 }

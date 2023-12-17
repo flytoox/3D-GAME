@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-mal <aait-mal@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:36:08 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/04 19:51:30 by aait-mal         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:08:17 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-void	render_ray(t_ray *ray, t_map *map, t_data *img)
-{
-	t_draw_params	params;
-
-	params.mlx = map->mlx;
-	params.x = ((int)map->player->x % (14 * TILE_SIZE)) * MINI_MAP_SCALE_FACTOR;
-	params.y = ((int)map->player->y % (14 * TILE_SIZE)) * MINI_MAP_SCALE_FACTOR;
-	params.color = 0x00FF0000;
-	draw_line(&params, ray->wall_hit_x * MINI_MAP_SCALE_FACTOR,
-		ray->wall_hit_y * MINI_MAP_SCALE_FACTOR, img);
-}
 
 double	normalize_angle(double angle)
 {

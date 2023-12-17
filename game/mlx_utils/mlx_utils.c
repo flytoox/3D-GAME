@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:37:27 by aait-mal          #+#    #+#             */
-/*   Updated: 2023/12/10 13:23:42 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:24:48 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	hook_key(int keycode, t_map *map)
 	if (keycode == 2)
 		map->player->side_movement = -1;
 	if (keycode == 257)
-		map->player->move_speed *= 2;
+		map->player->move_speed = 6;
 	if (keycode == 256)
 	{
 		map->toogle_mouse = !map->toogle_mouse;
@@ -57,7 +57,7 @@ int	release_key(int keycode, t_map *map)
 	if (keycode == 0 || keycode == 2)
 		map->player->side_movement = 0;
 	if (keycode == 257)
-		map->player->move_speed /= 2;
+		map->player->move_speed = 3;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:25:51 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/10 17:29:59 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:31:35 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ void	generate_map(void)
 	fd = open("mapTemp.cub", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	rand_map(map, height, width);
 	player_pos(map, height, width);
-	ft_putendl_fd("NO ./textures/wall.xpm", fd);
-	ft_putendl_fd("SO ./textures/wall2.xpm", fd);
-	ft_putendl_fd("WE ./textures/wall3.xpm", fd);
-	ft_putendl_fd("EA ./textures/wall4.xpm", fd);
+	ft_putendl_fd("NO ./game/textures/wall.xpm", fd);
+	ft_putendl_fd("SO ./game/textures/wall2.xpm", fd);
+	ft_putendl_fd("WE ./game/textures/wall3.xpm", fd);
+	ft_putendl_fd("EA ./game/textures/wall4.xpm", fd);
 	ft_putendl_fd("C 0,255,255", fd);
 	ft_putendl_fd("F 192,192,192", fd);
 	fill_file(map, fd, height, width);

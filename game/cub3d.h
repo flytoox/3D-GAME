@@ -6,7 +6,7 @@
 /*   By: obelaizi <obelaizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:47:16 by obelaizi          #+#    #+#             */
-/*   Updated: 2023/12/10 16:48:35 by obelaizi         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:30:18 by obelaizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
 # include <math.h>
-# include "./mlx/mlx.h"
-// # include <mlx.h>
+# include "../mlx/mlx.h"
 # include <stdbool.h>
 # include <limits.h>
 
@@ -29,6 +28,7 @@
 # define MINI_MAP_SCALE_FACTOR 0.2
 # define WALL_STRIP_WIDTH 1
 # define MIN_DISTANCE_FROM_WALL 20
+# define ERR ft_putstr_fd
 
 typedef struct colors
 {
@@ -121,7 +121,6 @@ typedef struct s_map
 	t_data			animation[10];
 	t_colors		clrs;
 	bool			toogle_mouse;
-	struct s_map	*next;
 }	t_map;
 
 typedef struct s_draw_params
@@ -146,12 +145,10 @@ typedef struct s_ray_params
 
 typedef struct s_draw_line
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	int		dx;
+	int		dy;
+	float	x_increment;
+	float	y_increment;
 }	t_draw_line;
 
 char	**cust_split(char *str);
@@ -193,7 +190,6 @@ void	init_mlx_window(t_mlx *mlx);
 void	cast_all_rays(t_map *map, double num_rays, int is_2d);
 void	cast_ray(t_ray *ray, t_map *map);
 void	initialise_ray(t_ray *ray, double ray_angle);
-void	render_ray(t_ray *ray, t_map *map, t_data *img);
 double	normalize_angle(double angle);
 double	distance_between_points(double x1, double y1, double x2, double y2);
 void	check_horizontal_intersect(t_ray *ray, t_map *map);
@@ -223,5 +219,5 @@ void	set_player_initial_position(t_map *lmap);
 int		mouse_click(int button, int x, int y, t_map *map);
 int		mousemove(int x, int y, t_map *map);
 
-void generate_map(void);
+void	generate_map(void);
 #endif
